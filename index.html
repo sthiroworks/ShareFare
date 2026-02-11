@@ -2,402 +2,386 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-
-    <title>
-      awa.design | Mayuka Sato Webデザイナー サムネイル・EC画像・LP制作
-    </title>
-
-    <!-- SEO メタタグ -->
-    <meta
-      name="description"
-      content="awa.designデザイン。相模原市のWebデザイナー・Mayuka Sato。サムネイル、EC画像、LP画像の制作を専門。丁寧で高品質なデザイン。まゆかでデザイン対応。LINE・Instagram @mayuka_webdesign でお気軽にご相談ください。"
-    />
-    <meta
-      name="google-site-verification"
-      content="IIOQkq28BuXRiQDYMhCPxL27rSVkU6Jg9VDwZr4ZgVg"
-    />
-    <meta name="msvalidate.01" content="C51787FFBB03454B427A3E450FDD8386" />
-
-    <meta
-      name="keywords"
-      content="awa.design,mayuka_webdesign,awa.design,デザイン,Mayuka Sato,Webデザイナー,Webデザイナー 依頼,Webデザイナー フリーランス,デザイン制作,グラフィックデザイナー,LP制作,LP制作 依頼,バナー制作,バナー作成,EC画像制作,サムネイル制作,サムネイル作成,画像制作,ポートフォリオ,フリーランス,在宅ワーク,相模原市,Instagram,デザイン依頼,web design,thumbnail design"
-    />
-    <link rel="canonical" href="https://mayuka-design.github.io/portfolio/" />
-    <meta name="author" content="Sato Mayuka" />
-    <meta name="robots" content="index, follow" />
-
-    <!-- OGP（SNSシェア対策） -->
-    <meta
-      property="og:title"
-      content="awa.design | Webデザイナー Mayuka Sato"
-    />
-    <meta
-      property="og:description"
-      content="相模原市のWebデザイナー・Mayuka（Mayuka Sato）。サムネイル、EC画像、LP画像の制作を専門。丁寧で高品質なデザイン制作。Instagram @mayuka_webdesign / LINE でお気軽にご相談ください."
-    />
-    <meta property="og:locale" content="ja_JP" />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://mayuka-design.github.io/portfolio/"
-    />
-    <meta
-      property="og:image"
-      content="https://mayuka-design.github.io/portfolio/img/profile.jpg"
-    />
-    <meta property="og:site_name" content="Mayuka Design Portfolio" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="awa.design | Webデザイナー Mayuka Sato"
-    />
-    <meta
-      name="twitter:description"
-      content="相模原市のWebデザイナー・Mayuka。サムネイル、EC画像、LP画像制作。Instagram @mayuka_webdesign"
-    />
-    <meta
-      name="twitter:image"
-      content="https://mayuka-design.github.io/portfolio/img/profile.jpg"
-    />
-
-    <!-- 外部CSS -->
-    <link rel="stylesheet" href="css/variables.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交通費精算</title>
     <link rel="stylesheet" href="css/style.css" />
-
-    <!-- 構造化データ (Schema.org JSON-LD) -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Person",
-            "@id": "https://mayuka-design.github.io/portfolio/#person",
-            "name": "Sato Mayuka (Mayuka Sato / Mayukaデザイナー)",
-            "jobTitle": "Web Designer / Graphic Designer",
-            "image": "https://mayuka-design.github.io/portfolio/img/profile.jpg",
-            "url": "https://mayuka-design.github.io/portfolio/",
-            "sameAs": [
-              "https://www.foriio.com/mayuka-design",
-              "https://www.instagram.com/mayuka_webdesign/"
-            ],
-            "description": "Web designer specializing in thumbnails, EC images, and LP design",
-            "knowsAbout": [
-              "Web Design",
-              "Graphic Design",
-              "LP Design",
-              "EC Image Design"
-            ],
-            "worksFor": {
-              "@type": "SelfEmployed"
-            },
-            "contactPoint": {
-              "@type": "ContactPoint",
-              "contactType": "Customer Support",
-              "url": "https://lin.ee/elkqvk4"
-            }
-          },
-          {
-            "@type": "WebSite",
-            "@id": "https://mayuka-design.github.io/portfolio/#website",
-            "url": "https://mayuka-design.github.io/portfolio/",
-            "name": "awa.design | Webデザイナー Mayuka Sato",
-            "publisher": {
-              "@id": "https://mayuka-design.github.io/portfolio/#person"
-            },
-            "inLanguage": "ja-JP",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://mayuka-design.github.io/portfolio/?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          }
-        ]
-      }
-    </script>
   </head>
 
   <body>
-    <!-- スプラッシュスクリーン -->
-    <div id="splash-screen">
-      <div class="splash-bubbles" aria-hidden="true"></div>
-      <img src="img/awa.design_moji.png" alt="awa.design" />
-    </div>
+    <main>
+      <h1>交通費精算</h1>
+      <form onsubmit="return false;">
+        <table class="tableClass">
+          <tbody>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="走行距離(km)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum走行距離"
+                  class="inputClass値A"
+                  type="number"
+                  step="0.1"
+                  value="0"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  id="id1"
+                  class="inputClass増減A"
+                  name="btn走行距離"
+                  type="button"
+                  value="+100"
+                  onclick="増減('InputNum走行距離', '+', '100')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn走行距離"
+                  type="button"
+                  value="-100"
+                  onclick="増減('InputNum走行距離', '-', '100')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="ガソリン単価(円/L)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNumガソリン単価"
+                  class="inputClass値A"
+                  type="number"
+                  step="1"
+                  value="0"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btnガソリン単価"
+                  type="button"
+                  value="+10"
+                  onclick="増減('InputNumガソリン単価', '+', '10')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btnガソリン単価"
+                  type="button"
+                  value="-10"
+                  onclick="増減('InputNumガソリン単価', '-', '10')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="燃費(km/L)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum燃費"
+                  class="inputClass値A"
+                  type="number"
+                  step="0.1"
+                  value="0.1"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn燃費"
+                  type="button"
+                  value="+0.1"
+                  onclick="増減('InputNum燃費', '+', '0.1')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn燃費"
+                  type="button"
+                  value="-0.1"
+                  onclick="増減('InputNum燃費', '-', '0.1')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="ガソリン代(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNumガソリン代"
+                  class="inputClass値A"
+                  type="number"
+                  value="0"
+                  disabled
+                />
+              </td>
+              <td class="tdClassElse" colspan="2"></td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="高速代(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum高速代"
+                  class="inputClass値A"
+                  type="number"
+                  step="1"
+                  value="0"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn高速代"
+                  type="button"
+                  value="+100"
+                  onclick="増減('InputNum高速代', '+', '100')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn高速代"
+                  type="button"
+                  value="-100"
+                  onclick="増減('InputNum高速代', '-', '100')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="駐車場代(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum駐車場代"
+                  class="inputClass値A"
+                  type="number"
+                  step="1"
+                  value="0"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn駐車場代"
+                  type="button"
+                  value="+100"
+                  onclick="増減('InputNum駐車場代', '+', '100')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn駐車場代"
+                  type="button"
+                  value="-100"
+                  onclick="増減('InputNum駐車場代', '-', '100')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="その他(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNumその他"
+                  class="inputClass値A"
+                  type="number"
+                  step="1"
+                  value="0"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btnその他"
+                  type="button"
+                  value="+100"
+                  onclick="増減('InputNumその他', '+', '100')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btnその他"
+                  type="button"
+                  value="-100"
+                  onclick="増減('InputNumその他', '-', '100')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="ガソリン代以外(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNumガソリン代以外"
+                  class="inputClass値A"
+                  type="number"
+                  value="0"
+                  disabled
+                />
+              </td>
+              <td class="tdClassElse" colspan="2"></td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="合計(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum合計"
+                  class="inputClass値A"
+                  type="number"
+                  value="0"
+                  disabled
+                />
+              </td>
+              <td class="tdClassElse" colspan="2"></td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="人数(人)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum人数"
+                  class="inputClass値A"
+                  type="number"
+                  step="1"
+                  value="1"
+                  oninput="AllCalc()"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn人数"
+                  type="button"
+                  value="+1"
+                  onclick="増減('InputNum人数', '+', '1')"
+                />
+              </td>
+              <td class="tdClass増減A">
+                <input
+                  class="inputClass増減A"
+                  name="btn人数"
+                  type="button"
+                  value="-1"
+                  onclick="増減('InputNum人数', '-', '1')"
+                />
+              </td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClass項目名A">
+                <input
+                  class="inputClass項目名A"
+                  type="text"
+                  value="一人当たり(円)"
+                  disabled
+                />
+              </td>
+              <td class="tdClass値A">
+                <input
+                  id="InputNum一人当たり"
+                  class="inputClass値A"
+                  type="number"
+                  value="0"
+                  disabled
+                />
+              </td>
+              <td class="tdClassElse" colspan="2"></td>
+            </tr>
+            <tr class="trClassA">
+              <td class="tdClassElse" colspan="4">
+                <input
+                  class="inputClass増減A"
+                  type="button"
+                  value="サンプル"
+                  onclick="InputSample()"
+                />
+                <input
+                  class="inputClass増減A"
+                  type="button"
+                  value="クリア"
+                  onclick="全Clear()"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </main>
 
-    <!-- メニューオーバーレイ -->
-    <div class="menu-overlay"></div>
-
-    <!-- ナビゲーションメニュー -->
-    <nav class="nav-menu" aria-label="サイト内ナビゲーション">
-      <ul>
-        <li><a href="#profile">プロフィール</a></li>
-        <li><a href="#works">制作実績</a></li>
-        <li><a href="#services">サービス</a></li>
-        <li><a href="#news">お知らせ</a></li>
-        <li><a href="#contact">お問い合わせ</a></li>
-      </ul>
-    </nav>
-
-    <!-- ハンバーガーメニュー -->
-    <button class="hamburger-menu" aria-label="メニュー">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <header class="fade-in">
-      <h1 class="visually-hidden">
-        awa.design | Webデザイナー Mayuka Satoのポートフォリオ
-      </h1>
-      <div class="header-img-wrap">
-        <div class="header-bubbles" aria-hidden="true"></div>
-        <img
-          src="img/HP_TOPgazou.png"
-          class="header-top-img"
-          alt="awa.designのポートフォリオトップビジュアル"
-        />
-        <!-- <img
-          src="img/awa.design_moji.png"
-          class="header-awa-img"
-          alt="awa.designのロゴ"
-        /> -->
-      </div>
-      <div class="cta-row">
-        <!-- <a class="cta" href="https://lin.ee/elkqvk4" target="_blank">
-          LINEで相談する
-        </a> -->
-        <!-- <a
-        class="cta instagram"
-        id="instagram-btn"
-        href="https://www.instagram.com/mayuka_webdesign/"
-        target="_blank"
-        rel="noopener noreferrer"
-        ></a> -->
-      </div>
-    </header>
-
-    <!-- プロフィールセクション -->
-    <section class="section profile-section fade-in" id="profile">
-      <h2>プロフィール</h2>
-      <p>
-        はじめまして。佐藤 真由佳（さとう
-        まゆか）と申します。相模原市を拠点に、awa.designを個人で運営するWebデザイナー＆グラフィックデザイナーです。<br />
-        大学卒業後、地元の自治体で13年間、公務員の保育士をしておりました。<br />
-        現在は二児の母で、保育士をしながら在宅でWebデザインのお仕事をしています。
-      </p>
-      <p>
-        awa.designでは、<strong>LP制作、バナー制作、EC画像制作、サムネイル制作</strong>など、グラフィックデザイン全般を専門としています。<br />
-        チラシなどの紙媒体のデザイン制作にも対応可能。丁寧で高品質なデザイン制作をいたします。
-      </p>
-      <p>
-        出産・育児経験をしている分、ライフステージの変化を経験されている方のお気持ちに寄り添ったデザイン制作を心がけています。<br />
-        子育てと両立しながらもお客様の要望に真摯に向き合い、丁寧に取り組んでまいります。<br />
-        awa.design をどうぞよろしくお願い致します。<br />
-        LINE・Instagramでお気軽に。
-      </p>
-    </section>
-
-    <!-- 制作実績セクション -->
-    <section class="section themed-section fade-in" id="works">
-      <h2>制作実績 | LP制作・バナー制作・EC画像・サムネイル制作</h2>
-      <p>
-        awa.designこれまでのデザイン制作実績です。<strong>LP制作、バナー制作、EC画像制作、サムネイル制作</strong>など、様々なプロジェクトを承ってきました。
-      </p>
-      <div class="category-tabs">
-        <button class="category-btn active" data-category="all">すべて</button>
-        <button class="category-btn" data-category="lp">LP</button>
-        <button class="category-btn" data-category="banner">バナー</button>
-        <button class="category-btn" data-category="ec">EC画像</button>
-      </div>
-      <div class="works-grid">
-        <a
-          href="https://www.foriio.com/works/1742063"
-          target="_blank"
-          class="work-card-link"
-        >
-          <div class="work-card" data-category="lp">
-            <img src="img/sample1.jpg" alt="美容サプリ LP" />
-            <h3>美容サプリ LP</h3>
-            <p class="work-desc">
-              女性向けに世界観を重視したデザイン。予約導線を改善し、CV率が向上。
-            </p>
-          </div>
-        </a>
-        <div class="work-card" data-category="lp">
-          <img src="img/sample2.jpg" alt="LP_FV スマホ版_美容サプリ" />
-          <h3>LP_FV スマホ版_美容サプリ</h3>
-          <p class="work-desc">
-            信頼性を重視したシンプル設計。問い合わせ数が増加。
-          </p>
-        </div>
-        <div class="work-card" data-category="lp">
-          <img src="img/sample3.jpg" alt="LP_FV_zoomセミナー_青Ver" />
-          <h3>LP_FV_zoomセミナー_青Ver</h3>
-          <p class="work-desc">
-            セミナー告知用に配色にこだわった設計。登録数が増加。
-          </p>
-        </div>
-        <div class="work-card" data-category="lp">
-          <img src="img/sample4.jpg" alt="LP_FV_zoomセミナー" />
-          <h3>LP_FV_zoomセミナー</h3>
-          <p class="work-desc">
-            参加者の心理に訴えるデザイン。クリック率が25%向上。
-          </p>
-        </div>
-        <div class="work-card" data-category="lp">
-          <img src="img/sample5.jpg" alt="スクールLP トップ画像" />
-          <h3>スクールLP トップ画像</h3>
-          <p class="work-desc">
-            教育サービスのポジティブなイメージを表現。問い合わせ倍増。
-          </p>
-        </div>
-        <div class="work-card" data-category="banner">
-          <img src="img/sample1.jpg" alt="Google広告バナー" />
-          <h3>Google広告バナー</h3>
-          <p class="work-desc">
-            高クリック率を実現する配色とコピー。CTR 2.5%達成。
-          </p>
-        </div>
-        <div class="work-card" data-category="ec">
-          <img src="img/EC1.jpg" alt="EC商品画像" />
-          <h3>EC商品画像</h3>
-          <p class="work-desc">商品の魅力を最大限に表現。売上20%増加。</p>
-        </div>
-      </div>
-      <div class="works-footer">
-        <a
-          class="link-btn"
-          href="https://www.foriio.com/mayuka-design/categories/LP"
-          target="_blank"
-        >
-          全ての作品をforiioで見る →
-        </a>
-      </div>
-    </section>
-
-    <!-- サービス内容セクション -->
-    <section class="section themed-section fade-in" id="services">
-      <h2>サービス内容</h2>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-btn">Webサイト制作・ホームページ制作</button>
-          <div class="accordion-content">
-            <p>
-              企業サイト、ポートフォリオサイト、オンラインショップなど、様々なWebサイトを制作いたします。レスポンシブデザイン対応で、モバイルにも最適化。SEO対策を考慮したWebサイト制作が可能です。
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-btn">LPデザイン・LP制作</button>
-          <div class="accordion-content">
-            <p>
-              LP制作はawa.designの専門分野の一つです。商品やサービスの販売を目的としたランディングページの企画・デザイン・制作。CV率の向上を意識した設計を行います。
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-btn">バナー制作・バナー作成</button>
-          <div class="accordion-content">
-            <p>
-              Google広告、SNS広告用のバナー制作や、Webサイトのアイキャッチ画像を制作いたします。複数パターンの提案も可能です。効果的なバナー制作でクリック率向上をサポートします。
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-btn">EC画像制作・サムネイル制作</button>
-          <div class="accordion-content">
-            <p>
-              EC サイト用の商品画像制作、YouTube サムネイル制作、Amazon
-              商品画像制作など、あらゆる画像制作に対応しています。売上向上や、視認性向上を意識したデザイン制作。
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- お知らせセクション -->
-    <section class="section news-section fade-in" id="news">
-      <h2>お知らせ</h2>
-      <ul class="news-list">
-        <li class="news-item">
-          <time class="news-date" datetime="2026-02-10">2026.02.10</time>
-          <p class="news-text">ポートフォリオサイトをリニューアルしました。</p>
-        </li>
-        <li class="news-item">
-          <time class="news-date" datetime="2026-02-01">2026.02.01</time>
-          <p class="news-text">
-            新規案件のご依頼を受付中です。お気軽にお問い合わせください。
-          </p>
-        </li>
-        <li class="news-item">
-          <time class="news-date" datetime="2026-01-15">2026.01.15</time>
-          <p class="news-text">LINEでのご相談も承っております。</p>
-        </li>
-      </ul>
-    </section>
-
-    <section class="section cta-section fade-in" id="contact">
-      <h2>まずはLINEでお気軽にご相談ください</h2>
-      <a class="cta" href="https://lin.ee/elkqvk4" target="_blank">
-        LINEで相談する
-      </a>
-    </section>
-
-    <footer>
-      <p>© 2026 awa.design | Webデザイナー Mayuka Sato</p>
-      <div class="footer-links">
-        <a
-          href="https://www.instagram.com/mayuka_webdesign/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            style="vertical-align: middle; margin-right: 4px"
-          >
-            <rect width="24" height="24" rx="6" fill="#fff" />
-            <path
-              d="M12 7.2A4.8 4.8 0 1 0 12 16.8A4.8 4.8 0 1 0 12 7.2Z"
-              stroke="#E4405F"
-              stroke-width="1.5"
-            />
-            <circle cx="17.2" cy="6.8" r="1.2" fill="#E4405F" />
-            <rect
-              x="3.2"
-              y="3.2"
-              width="17.6"
-              height="17.6"
-              rx="5.8"
-              stroke="#E4405F"
-              stroke-width="1.5"
-            />
-          </svg>
-          Instagram: @mayuka_webdesign
-        </a>
-        <span> | </span>
-        <a
-          href="https://www.foriio.com/mayuka-design"
-          target="_blank"
-          rel="noopener noreferrer"
-          >foriio</a
-        >
-      </div>
-    </footer>
-
-    <!-- トップに戻るボタン -->
-    <button id="scroll-to-top" class="scroll-to-top" aria-label="トップに戻る">
-      <img src="img/scroll-to-top.svg" alt="" aria-hidden="true" />
-    </button>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

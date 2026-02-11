@@ -71,9 +71,18 @@ body::before {
 }
 
 .calc__title {
-  margin: 0 0 16px;
+  margin: 0 0 8px;
   font-size: 28px;
   letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--color-accent), #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow:
+    0 0 20px rgba(56, 189, 248, 0.4),
+    0 0 40px rgba(251, 191, 36, 0.2);
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.3));
+  font-weight: 700;
 }
 
 .calc__table {
@@ -94,6 +103,7 @@ body::before {
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 0.08em;
+  width: 45%;
 }
 
 .calc__label--formula {
@@ -135,6 +145,7 @@ body::before {
 
 .calc__cell {
   padding: 4px 8px;
+  width: 20%;
 }
 
 .calc__cell--tight {
@@ -188,11 +199,17 @@ body::before {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
   transition:
     transform 0.15s ease,
     box-shadow 0.2s ease,
     background 0.2s ease;
+}
+
+[data-target="people-count"] {
+  box-shadow:
+    0 4px 8px rgba(56, 189, 248, 0.25),
+    0 0 12px rgba(56, 189, 248, 0.15);
 }
 
 .calc__button-stack {
@@ -204,12 +221,32 @@ body::before {
   height: 28px;
   font-size: 12px;
   padding: 0;
+  box-shadow:
+    0 4px 8px rgba(56, 189, 248, 0.25),
+    0 0 12px rgba(56, 189, 248, 0.15);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .calc__button:hover {
   background: linear-gradient(135deg, var(--color-button-hover), #1e3a8a);
   transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+[data-target="people-count"]:hover {
+  box-shadow:
+    0 6px 12px rgba(56, 189, 248, 0.35),
+    0 0 16px rgba(56, 189, 248, 0.25);
+}
+
+.calc__button--mini:hover {
+  box-shadow:
+    0 6px 12px rgba(56, 189, 248, 0.35),
+    0 0 16px rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
 }
 
 .calc__actions {
@@ -225,12 +262,29 @@ body::before {
   padding: 0 18px;
   background: linear-gradient(135deg, var(--color-button), var(--color-accent));
   border-color: rgba(56, 189, 248, 0.6);
-  box-shadow: var(--shadow-glow);
+  box-shadow:
+    0 0 12px rgba(56, 189, 248, 0.3),
+    0 4px 8px rgba(37, 99, 235, 0.2);
+}
+
+.calc__button--action:hover {
+  box-shadow:
+    0 0 18px rgba(56, 189, 248, 0.5),
+    0 6px 12px rgba(37, 99, 235, 0.3);
 }
 
 .calc__button--action:last-child {
   background: linear-gradient(135deg, #0ea5e9, var(--color-accent-2));
   border-color: rgba(251, 191, 36, 0.6);
+  box-shadow:
+    0 0 12px rgba(251, 191, 36, 0.3),
+    0 4px 8px rgba(251, 191, 36, 0.15);
+}
+
+.calc__button--action:last-child:hover {
+  box-shadow:
+    0 0 18px rgba(251, 191, 36, 0.5),
+    0 6px 12px rgba(251, 191, 36, 0.25);
 }
 
 @media (max-width: 768px) {
@@ -257,10 +311,28 @@ body::before {
     font-size: 13px;
   }
 
+  .calc__input {
+    width: 120px;
+  }
+
+  .calc__cell {
+    width: 150px;
+  }
+
   .calc__button--mini {
     height: 26px;
     font-size: 9px;
     padding: 0 6px;
+    box-shadow:
+      0 3px 6px rgba(56, 189, 248, 0.2),
+      0 0 8px rgba(56, 189, 248, 0.12);
+    width: 80px;
+  }
+
+  .calc__button--mini:hover {
+    box-shadow:
+      0 4px 8px rgba(56, 189, 248, 0.25),
+      0 0 12px rgba(56, 189, 248, 0.18);
   }
 
   .calc__button-stack {
@@ -285,5 +357,14 @@ body::before {
     padding: 0 12px;
     font-size: 12px;
     width: 200px;
+    box-shadow:
+      0 0 8px rgba(56, 189, 248, 0.25),
+      0 4px 8px rgba(37, 99, 235, 0.15);
+  }
+
+  .calc__button--action:hover {
+    box-shadow:
+      0 0 12px rgba(56, 189, 248, 0.4),
+      0 6px 10px rgba(37, 99, 235, 0.25);
   }
 }

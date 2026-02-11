@@ -56,8 +56,8 @@ const updateTotals = () => {
   const otherCost = toNumber(fields.otherCost, defaults.otherCost);
   let peopleCount = toNumber(fields.peopleCount, defaults.peopleCount);
 
-  fuelEfficiency = clampMin(fuelEfficiency, defaults.fuelEfficiency);
-  peopleCount = clampMin(peopleCount, defaults.peopleCount);
+  fuelEfficiency = clampMin(fuelEfficiency, 1.0);
+  peopleCount = clampMin(peopleCount, 1);
 
   if (fields.fuelEfficiency.value !== String(fuelEfficiency)) {
     fields.fuelEfficiency.value = String(fuelEfficiency);
@@ -101,17 +101,17 @@ const applySample = () => {
 };
 
 const applyClear = () => {
-  fields.distance.value = String(defaults.distance);
-  fields.fuelEfficiency.value = String(defaults.fuelEfficiency);
-  fields.fuelPrice.value = String(defaults.fuelPrice);
-  fields.fuelCost.value = String(defaults.fuelCost);
-  fields.parkingCost.value = String(defaults.parkingCost);
-  fields.tollCost.value = String(defaults.tollCost);
-  fields.otherCost.value = String(defaults.otherCost);
-  fields.nonFuelCost.value = String(defaults.nonFuelCost);
-  fields.peopleCount.value = String(defaults.peopleCount);
-  fields.totalCost.value = String(defaults.totalCost);
-  fields.perPersonCost.value = String(defaults.perPersonCost);
+  fields.distance.value = "0";
+  fields.fuelEfficiency.value = "1.0";
+  fields.fuelPrice.value = "0";
+  fields.fuelCost.value = "0";
+  fields.parkingCost.value = "0";
+  fields.tollCost.value = "0";
+  fields.otherCost.value = "0";
+  fields.nonFuelCost.value = "0";
+  fields.peopleCount.value = "1";
+  fields.totalCost.value = "0";
+  fields.perPersonCost.value = "0";
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fuelCost: ["distance", "fuelPrice", "fuelEfficiency"],
     nonFuelCost: ["tollCost", "parkingCost", "otherCost"],
     totalCost: ["fuelCost", "nonFuelCost"],
-    perPersonCost: ["totalCost", "peopleCount"],
+    perPersonCost: ["totalCost", "peopleCount"]
   };
 
   // 逆マッピング（入力 -> 出力）

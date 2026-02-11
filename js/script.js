@@ -1,3 +1,4 @@
+// DOM bindings
 const fields = {
   distance: document.getElementById("distance"),
   fuelPrice: document.getElementById("fuel-price"),
@@ -12,6 +13,7 @@ const fields = {
   perPersonCost: document.getElementById("per-person-cost")
 };
 
+// Default values for calculations
 const defaults = {
   distance: 100,
   fuelPrice: 150,
@@ -26,18 +28,56 @@ const defaults = {
   perPersonCost: 0
 };
 
+// Minimum input constraints
+const minValues = {
+  fuelEfficiency: 1.0,
+  peopleCount: 1
+};
+
+// Values used by the clear action
+const clearValues = {
+  distance: "0",
+  fuelEfficiency: "1.0",
+  fuelPrice: "0",
+  tollCost: "0",
+  parkingCost: "0",
+  otherCost: "0",
+  peopleCount: "1"
+};
+
+// Read-only outputs
+const outputFields = ["fuelCost", "nonFuelCost", "totalCost", "perPersonCost"];
+
+// Safe number parse with fallback
 const toNumber = (input, fallback) => {
   const value = Number(input.value);
   return Number.isFinite(value) ? value : fallback;
 };
 
+// Lower-bound clamp
 const clampMin = (value, min) => (value < min ? min : value);
 
+// Set field value with consistent string conversion
+const setFieldValue = (fieldKey, value) => {
+  fields[fieldKey].value = String(value);
+};
+
+// Enforce min and sync input UI
+const normalizeMin = (fieldKey, value, min) => {
+  const normalized = clampMin(value, min);
+  if (fields[fieldKey].value !== String(normalized)) {
+    fields[fieldKey].value = String(normalized);
+  }
+  return normalized;
+};
+
+// Decimal rounding helper
 const roundTo = (value, decimals) => {
   const factor = 10 ** decimals;
   return Math.round(value * factor) / factor;
 };
 
+// Normalize by input step (supports decimal steps)
 const normalizeByStep = (input, value) => {
   const step = Number(input.step);
   if (Number.isFinite(step) && step > 0 && step < 1) {
@@ -47,6 +87,7 @@ const normalizeByStep = (input, value) => {
   return Math.round(value);
 };
 
+// Main calculation pipeline
 const updateTotals = () => {
   const distance = toNumber(fields.distance, defaults.distance);
   const fuelPrice = toNumber(fields.fuelPrice, defaults.fuelPrice);
@@ -56,28 +97,25 @@ const updateTotals = () => {
   const otherCost = toNumber(fields.otherCost, defaults.otherCost);
   let peopleCount = toNumber(fields.peopleCount, defaults.peopleCount);
 
-  fuelEfficiency = clampMin(fuelEfficiency, 1.0);
-  peopleCount = clampMin(peopleCount, 1);
-
-  if (fields.fuelEfficiency.value !== String(fuelEfficiency)) {
-    fields.fuelEfficiency.value = String(fuelEfficiency);
-  }
-
-  if (fields.peopleCount.value !== String(peopleCount)) {
-    fields.peopleCount.value = String(peopleCount);
-  }
+  fuelEfficiency = normalizeMin(
+    "fuelEfficiency",
+    fuelEfficiency,
+    minValues.fuelEfficiency
+  );
+  peopleCount = normalizeMin("peopleCount", peopleCount, minValues.peopleCount);
 
   const fuelCost = Math.round((distance / fuelEfficiency) * fuelPrice);
   const nonFuelCost = tollCost + parkingCost + otherCost;
   const totalCost = fuelCost + nonFuelCost;
   const perPersonCost = Math.round(totalCost / peopleCount);
 
-  fields.fuelCost.value = String(fuelCost);
-  fields.nonFuelCost.value = String(nonFuelCost);
-  fields.totalCost.value = String(totalCost);
-  fields.perPersonCost.value = String(perPersonCost);
+  setFieldValue("fuelCost", fuelCost);
+  setFieldValue("nonFuelCost", nonFuelCost);
+  setFieldValue("totalCost", totalCost);
+  setFieldValue("perPersonCost", perPersonCost);
 };
 
+// Step adjust buttons
 const adjustField = (targetId, delta) => {
   const input = document.getElementById(targetId);
   if (!input) return;
@@ -89,31 +127,29 @@ const adjustField = (targetId, delta) => {
   updateTotals();
 };
 
+// Sample preset
 const applySample = () => {
-  fields.distance.value = "500";
-  fields.fuelEfficiency.value = "11.5";
-  fields.fuelPrice.value = "129";
-  fields.parkingCost.value = "1000";
-  fields.tollCost.value = "7000";
-  fields.otherCost.value = "100";
-  fields.peopleCount.value = "4";
+  setFieldValue("distance", "500");
+  setFieldValue("fuelEfficiency", "11.5");
+  setFieldValue("fuelPrice", "129");
+  setFieldValue("parkingCost", "1000");
+  setFieldValue("tollCost", "7000");
+  setFieldValue("otherCost", "100");
+  setFieldValue("peopleCount", "4");
   updateTotals();
 };
 
+// Clear to minimums/zeros
 const applyClear = () => {
-  fields.distance.value = "0";
-  fields.fuelEfficiency.value = "1.0";
-  fields.fuelPrice.value = "0";
-  fields.fuelCost.value = "0";
-  fields.parkingCost.value = "0";
-  fields.tollCost.value = "0";
-  fields.otherCost.value = "0";
-  fields.nonFuelCost.value = "0";
-  fields.peopleCount.value = "1";
-  fields.totalCost.value = "0";
-  fields.perPersonCost.value = "0";
+  Object.entries(clearValues).forEach(([fieldKey, value]) => {
+    setFieldValue(fieldKey, value);
+  });
+  outputFields.forEach((fieldKey) => {
+    setFieldValue(fieldKey, "0");
+  });
 };
 
+// Wiring
 document.addEventListener("DOMContentLoaded", () => {
   // 計算関係のマッピング（出力 -> 入力）
   const dependencyMap = {
@@ -141,12 +177,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (element.readOnly && dependencyMap[fieldId]) {
         element.addEventListener("mouseenter", () => {
           dependencyMap[fieldId].forEach((inputId) => {
-            fields[inputId]?.classList.add("calc__input--active");
+            fields[inputId]?.classList.add("calc_input--active");
           });
         });
         element.addEventListener("mouseleave", () => {
           dependencyMap[fieldId].forEach((inputId) => {
-            fields[inputId]?.classList.remove("calc__input--active");
+            fields[inputId]?.classList.remove("calc_input--active");
           });
         });
       }
@@ -155,19 +191,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!element.readOnly && reverseDependencyMap[fieldId]) {
         element.addEventListener("mouseenter", () => {
           reverseDependencyMap[fieldId].forEach((outputId) => {
-            fields[outputId]?.classList.add("calc__input--active");
+            fields[outputId]?.classList.add("calc_input--active");
           });
         });
         element.addEventListener("mouseleave", () => {
           reverseDependencyMap[fieldId].forEach((outputId) => {
-            fields[outputId]?.classList.remove("calc__input--active");
+            fields[outputId]?.classList.remove("calc_input--active");
           });
         });
       }
     });
   };
 
-  document.querySelectorAll(".calc__input").forEach((input) => {
+  document.querySelectorAll(".calc_input").forEach((input) => {
     if (input.readOnly) return;
     input.addEventListener("input", updateTotals);
   });

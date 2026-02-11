@@ -13,16 +13,16 @@ const fields = {
 };
 
 const defaults = {
-  distance: 0,
-  fuelPrice: 0,
-  fuelEfficiency: 0.1,
+  distance: 100,
+  fuelPrice: 150,
+  fuelEfficiency: 10,
   fuelCost: 0,
-  tollCost: 0,
+  tollCost: 1000,
   parkingCost: 0,
   otherCost: 0,
   nonFuelCost: 0,
   totalCost: 0,
-  peopleCount: 1,
+  peopleCount: 4,
   perPersonCost: 0
 };
 
@@ -115,6 +115,58 @@ const applyClear = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  // 計算関係のマッピング（出力 -> 入力）
+  const dependencyMap = {
+    fuelCost: ["distance", "fuelPrice", "fuelEfficiency"],
+    nonFuelCost: ["tollCost", "parkingCost", "otherCost"],
+    totalCost: ["fuelCost", "nonFuelCost"],
+    perPersonCost: ["totalCost", "peopleCount"],
+  };
+
+  // 逆マッピング（入力 -> 出力）
+  const reverseDependencyMap = {};
+  Object.entries(dependencyMap).forEach(([output, inputs]) => {
+    inputs.forEach((input) => {
+      if (!reverseDependencyMap[input]) {
+        reverseDependencyMap[input] = [];
+      }
+      reverseDependencyMap[input].push(output);
+    });
+  });
+
+  // ホバーでハイライト
+  const setupHighlight = () => {
+    Object.entries(fields).forEach(([fieldId, element]) => {
+      // 出力フィールドのホバー
+      if (element.readOnly && dependencyMap[fieldId]) {
+        element.addEventListener("mouseenter", () => {
+          dependencyMap[fieldId].forEach((inputId) => {
+            fields[inputId]?.classList.add("calc__input--active");
+          });
+        });
+        element.addEventListener("mouseleave", () => {
+          dependencyMap[fieldId].forEach((inputId) => {
+            fields[inputId]?.classList.remove("calc__input--active");
+          });
+        });
+      }
+
+      // 入力フィールドのホバー
+      if (!element.readOnly && reverseDependencyMap[fieldId]) {
+        element.addEventListener("mouseenter", () => {
+          reverseDependencyMap[fieldId].forEach((outputId) => {
+            fields[outputId]?.classList.add("calc__input--active");
+          });
+        });
+        element.addEventListener("mouseleave", () => {
+          reverseDependencyMap[fieldId].forEach((outputId) => {
+            fields[outputId]?.classList.remove("calc__input--active");
+          });
+        });
+      }
+    });
+  };
+
   document.querySelectorAll(".calc__input").forEach((input) => {
     if (input.readOnly) return;
     input.addEventListener("input", updateTotals);
@@ -143,5 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  setupHighlight();
   updateTotals();
 });

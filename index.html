@@ -25,7 +25,7 @@
                   type="number"
                   step="0.1"
                   min="0"
-                  value="0"
+                  value="100"
                 />
               </td>
               <td class="calc__cell calc__cell--tight">
@@ -97,7 +97,7 @@
                   type="number"
                   step="1"
                   min="0"
-                  value="0"
+                  value="150"
                 />
               </td>
               <td class="calc__cell calc__cell--tight">
@@ -153,32 +153,52 @@
                   type="number"
                   step="0.1"
                   min="0.1"
-                  value="0.1"
+                  value="10"
                 />
               </td>
               <td class="calc__cell calc__cell--tight">
-                <button
-                  class="calc__button"
-                  type="button"
-                  data-target="fuel-efficiency"
-                  data-delta="0.1"
-                >
-                  +0.1
-                </button>
+                <div class="calc__button-stack">
+                  <button
+                    class="calc__button calc__button--mini"
+                    type="button"
+                    data-target="fuel-efficiency"
+                    data-delta="1"
+                  >
+                    +1
+                  </button>
+                  <button
+                    class="calc__button calc__button--mini"
+                    type="button"
+                    data-target="fuel-efficiency"
+                    data-delta="0.1"
+                  >
+                    +0.1
+                  </button>
+                </div>
               </td>
               <td class="calc__cell calc__cell--tight">
-                <button
-                  class="calc__button"
-                  type="button"
-                  data-target="fuel-efficiency"
-                  data-delta="-0.1"
-                >
-                  -0.1
-                </button>
+                <div class="calc__button-stack">
+                  <button
+                    class="calc__button calc__button--mini"
+                    type="button"
+                    data-target="fuel-efficiency"
+                    data-delta="-1"
+                  >
+                    -1
+                  </button>
+                  <button
+                    class="calc__button calc__button--mini"
+                    type="button"
+                    data-target="fuel-efficiency"
+                    data-delta="-0.1"
+                  >
+                    -0.1
+                  </button>
+                </div>
               </td>
             </tr>
             <tr class="calc__row">
-              <th class="calc__label" scope="row">
+              <th class="calc__label calc__label--formula" scope="row" data-formula="走行距離 ÷ 燃費 × ガソリン単価">
                 <label for="fuel-cost">ガソリン代(円)</label>
               </th>
               <td class="calc__cell">
@@ -187,7 +207,7 @@
                   name="fuelCost"
                   class="calc__input calc__output"
                   type="number"
-                  value="0"
+                  value="1000"
                   readonly
                 />
               </td>
@@ -214,25 +234,17 @@
                     class="calc__button calc__button--mini"
                     type="button"
                     data-target="toll-cost"
+                    data-delta="1000"
+                  >
+                    +1000
+                  </button>
+                  <button
+                    class="calc__button calc__button--mini"
+                    type="button"
+                    data-target="toll-cost"
                     data-delta="100"
                   >
                     +100
-                  </button>
-                  <button
-                    class="calc__button calc__button--mini"
-                    type="button"
-                    data-target="toll-cost"
-                    data-delta="10"
-                  >
-                    +10
-                  </button>
-                  <button
-                    class="calc__button calc__button--mini"
-                    type="button"
-                    data-target="toll-cost"
-                    data-delta="1"
-                  >
-                    +1
                   </button>
                 </div>
               </td>
@@ -242,25 +254,17 @@
                     class="calc__button calc__button--mini"
                     type="button"
                     data-target="toll-cost"
+                    data-delta="-1000"
+                  >
+                    -1000
+                  </button>
+                  <button
+                    class="calc__button calc__button--mini"
+                    type="button"
+                    data-target="toll-cost"
                     data-delta="-100"
                   >
                     -100
-                  </button>
-                  <button
-                    class="calc__button calc__button--mini"
-                    type="button"
-                    data-target="toll-cost"
-                    data-delta="-10"
-                  >
-                    -10
-                  </button>
-                  <button
-                    class="calc__button calc__button--mini"
-                    type="button"
-                    data-target="toll-cost"
-                    data-delta="-1"
-                  >
-                    -1
                   </button>
                 </div>
               </td>
@@ -410,7 +414,7 @@
               </td>
             </tr>
             <tr class="calc__row">
-              <th class="calc__label" scope="row">
+              <th class="calc__label calc__label--formula" scope="row" data-formula="高速代 + 駐車場代 + その他">
                 <label for="non-fuel-cost">ガソリン代以外(円)</label>
               </th>
               <td class="calc__cell">
@@ -426,7 +430,7 @@
               <td class="calc__cell" colspan="2"></td>
             </tr>
             <tr class="calc__row">
-              <th class="calc__label" scope="row">
+              <th class="calc__label calc__label--formula" scope="row" data-formula="ガソリン代 + ガソリン代以外">
                 <label for="total-cost">合計(円)</label>
               </th>
               <td class="calc__cell">
@@ -453,7 +457,7 @@
                   type="number"
                   step="1"
                   min="1"
-                  value="1"
+                  value="4"
                 />
               </td>
               <td class="calc__cell calc__cell--tight">
@@ -478,7 +482,7 @@
               </td>
             </tr>
             <tr class="calc__row">
-              <th class="calc__label" scope="row">
+              <th class="calc__label calc__label--formula" scope="row" data-formula="合計 ÷ 人数">
                 <label for="per-person-cost">一人当たり(円)</label>
               </th>
               <td class="calc__cell">
@@ -493,26 +497,24 @@
               </td>
               <td class="calc__cell" colspan="2"></td>
             </tr>
-            <tr class="calc__row">
-              <td class="calc__actions" colspan="4">
-                <button
-                  class="calc__button calc__button--action"
-                  type="button"
-                  data-action="sample"
-                >
-                  サンプル
-                </button>
-                <button
-                  class="calc__button calc__button--action"
-                  type="button"
-                  data-action="clear"
-                >
-                  クリア
-                </button>
-              </td>
-            </tr>
           </tbody>
         </table>
+        <div class="calc__actions">
+          <button
+            class="calc__button calc__button--action"
+            type="button"
+            data-action="sample"
+          >
+            サンプル
+          </button>
+          <button
+            class="calc__button calc__button--action"
+            type="button"
+            data-action="clear"
+          >
+            クリア
+          </button>
+        </div>
       </form>
     </main>
 

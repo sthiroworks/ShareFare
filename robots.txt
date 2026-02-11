@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sharefare.example.com/sitemap.xml
+Sitemap: https://sthiroworks.github.io/ShareFare/sitemap.xml

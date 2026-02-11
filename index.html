@@ -8,372 +8,343 @@
   </head>
 
   <body>
-    <main>
-      <h1>交通費精算</h1>
-      <form onsubmit="return false;">
-        <table class="tableClass">
+    <main class="calc">
+      <h1 class="calc__title">交通費精算</h1>
+      <form class="calc__form" novalidate>
+        <table class="calc__table">
           <tbody>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="distance">走行距離(km)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="走行距離(km)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum走行距離"
-                  class="inputClass値A"
+                  id="distance"
+                  name="distance"
+                  class="calc__input"
                   type="number"
                   step="0.1"
+                  min="0"
                   value="0"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  id="id1"
-                  class="inputClass増減A"
-                  name="btn走行距離"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+100"
-                  onclick="増減('InputNum走行距離', '+', '100')"
-                />
+                  data-target="distance"
+                  data-delta="100"
+                >
+                  +100
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn走行距離"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-100"
-                  onclick="増減('InputNum走行距離', '-', '100')"
-                />
+                  data-target="distance"
+                  data-delta="-100"
+                >
+                  -100
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="fuel-price">ガソリン単価(円/L)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="ガソリン単価(円/L)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNumガソリン単価"
-                  class="inputClass値A"
+                  id="fuel-price"
+                  name="fuelPrice"
+                  class="calc__input"
                   type="number"
                   step="1"
+                  min="0"
                   value="0"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btnガソリン単価"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+10"
-                  onclick="増減('InputNumガソリン単価', '+', '10')"
-                />
+                  data-target="fuel-price"
+                  data-delta="10"
+                >
+                  +10
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btnガソリン単価"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-10"
-                  onclick="増減('InputNumガソリン単価', '-', '10')"
-                />
+                  data-target="fuel-price"
+                  data-delta="-10"
+                >
+                  -10
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="fuel-efficiency">燃費(km/L)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="燃費(km/L)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum燃費"
-                  class="inputClass値A"
+                  id="fuel-efficiency"
+                  name="fuelEfficiency"
+                  class="calc__input"
                   type="number"
                   step="0.1"
+                  min="0.1"
                   value="0.1"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn燃費"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+0.1"
-                  onclick="増減('InputNum燃費', '+', '0.1')"
-                />
+                  data-target="fuel-efficiency"
+                  data-delta="0.1"
+                >
+                  +0.1
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn燃費"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-0.1"
-                  onclick="増減('InputNum燃費', '-', '0.1')"
-                />
+                  data-target="fuel-efficiency"
+                  data-delta="-0.1"
+                >
+                  -0.1
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="fuel-cost">ガソリン代(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="ガソリン代(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNumガソリン代"
-                  class="inputClass値A"
+                  id="fuel-cost"
+                  name="fuelCost"
+                  class="calc__input calc__output"
                   type="number"
                   value="0"
-                  disabled
+                  readonly
                 />
               </td>
-              <td class="tdClassElse" colspan="2"></td>
+              <td class="calc__cell" colspan="2"></td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="toll-cost">高速代(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="高速代(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum高速代"
-                  class="inputClass値A"
+                  id="toll-cost"
+                  name="tollCost"
+                  class="calc__input"
                   type="number"
                   step="1"
+                  min="0"
                   value="0"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn高速代"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+100"
-                  onclick="増減('InputNum高速代', '+', '100')"
-                />
+                  data-target="toll-cost"
+                  data-delta="100"
+                >
+                  +100
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn高速代"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-100"
-                  onclick="増減('InputNum高速代', '-', '100')"
-                />
+                  data-target="toll-cost"
+                  data-delta="-100"
+                >
+                  -100
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="parking-cost">駐車場代(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="駐車場代(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum駐車場代"
-                  class="inputClass値A"
+                  id="parking-cost"
+                  name="parkingCost"
+                  class="calc__input"
                   type="number"
                   step="1"
+                  min="0"
                   value="0"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn駐車場代"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+100"
-                  onclick="増減('InputNum駐車場代', '+', '100')"
-                />
+                  data-target="parking-cost"
+                  data-delta="100"
+                >
+                  +100
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn駐車場代"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-100"
-                  onclick="増減('InputNum駐車場代', '-', '100')"
-                />
+                  data-target="parking-cost"
+                  data-delta="-100"
+                >
+                  -100
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="other-cost">その他(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="その他(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNumその他"
-                  class="inputClass値A"
+                  id="other-cost"
+                  name="otherCost"
+                  class="calc__input"
                   type="number"
                   step="1"
+                  min="0"
                   value="0"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btnその他"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+100"
-                  onclick="増減('InputNumその他', '+', '100')"
-                />
+                  data-target="other-cost"
+                  data-delta="100"
+                >
+                  +100
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btnその他"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-100"
-                  onclick="増減('InputNumその他', '-', '100')"
-                />
+                  data-target="other-cost"
+                  data-delta="-100"
+                >
+                  -100
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="non-fuel-cost">ガソリン代以外(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="ガソリン代以外(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNumガソリン代以外"
-                  class="inputClass値A"
+                  id="non-fuel-cost"
+                  name="nonFuelCost"
+                  class="calc__input calc__output"
                   type="number"
                   value="0"
-                  disabled
+                  readonly
                 />
               </td>
-              <td class="tdClassElse" colspan="2"></td>
+              <td class="calc__cell" colspan="2"></td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="total-cost">合計(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="合計(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum合計"
-                  class="inputClass値A"
+                  id="total-cost"
+                  name="totalCost"
+                  class="calc__input calc__output"
                   type="number"
                   value="0"
-                  disabled
+                  readonly
                 />
               </td>
-              <td class="tdClassElse" colspan="2"></td>
+              <td class="calc__cell" colspan="2"></td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="people-count">人数(人)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="人数(人)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum人数"
-                  class="inputClass値A"
+                  id="people-count"
+                  name="peopleCount"
+                  class="calc__input"
                   type="number"
                   step="1"
+                  min="1"
                   value="1"
-                  oninput="AllCalc()"
                 />
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn人数"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="+1"
-                  onclick="増減('InputNum人数', '+', '1')"
-                />
+                  data-target="people-count"
+                  data-delta="1"
+                >
+                  +1
+                </button>
               </td>
-              <td class="tdClass増減A">
-                <input
-                  class="inputClass増減A"
-                  name="btn人数"
+              <td class="calc__cell calc__cell--tight">
+                <button
+                  class="calc__button"
                   type="button"
-                  value="-1"
-                  onclick="増減('InputNum人数', '-', '1')"
-                />
+                  data-target="people-count"
+                  data-delta="-1"
+                >
+                  -1
+                </button>
               </td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClass項目名A">
+            <tr class="calc__row">
+              <th class="calc__label" scope="row">
+                <label for="per-person-cost">一人当たり(円)</label>
+              </th>
+              <td class="calc__cell">
                 <input
-                  class="inputClass項目名A"
-                  type="text"
-                  value="一人当たり(円)"
-                  disabled
-                />
-              </td>
-              <td class="tdClass値A">
-                <input
-                  id="InputNum一人当たり"
-                  class="inputClass値A"
+                  id="per-person-cost"
+                  name="perPersonCost"
+                  class="calc__input calc__output"
                   type="number"
                   value="0"
-                  disabled
+                  readonly
                 />
               </td>
-              <td class="tdClassElse" colspan="2"></td>
+              <td class="calc__cell" colspan="2"></td>
             </tr>
-            <tr class="trClassA">
-              <td class="tdClassElse" colspan="4">
-                <input
-                  class="inputClass増減A"
+            <tr class="calc__row">
+              <td class="calc__actions" colspan="4">
+                <button
+                  class="calc__button calc__button--action"
                   type="button"
-                  value="サンプル"
-                  onclick="InputSample()"
-                />
-                <input
-                  class="inputClass増減A"
+                  data-action="sample"
+                >
+                  サンプル
+                </button>
+                <button
+                  class="calc__button calc__button--action"
                   type="button"
-                  value="クリア"
-                  onclick="全Clear()"
-                />
+                  data-action="clear"
+                >
+                  クリア
+                </button>
               </td>
             </tr>
           </tbody>
@@ -381,7 +352,6 @@
       </form>
     </main>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

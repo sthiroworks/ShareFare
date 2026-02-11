@@ -3,13 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>交通費精算</title>
+    <title>交通費精算計算機 - ガソリン代や高速代をまとめて計算</title>
+    <meta name="description" content="交通費の精算計算を簡単に。ガソリン代、高速代、駐車場代などをまとめて計算でき、一人当たりの負担額も自動算出します。複数人での移動費の割り勘に便利です。" />
+    <meta name="keywords" content="交通費,精算,計算,ガソリン代,高速代,駐車場,割り勘,経費計算" />
+    <meta name="author" content="ShareFare" />
+    
+    <!-- OGタグ -->
+    <meta property="og:title" content="交通費精算計算機 - ガソリン代や高速代をまとめて計算" />
+    <meta property="og:description" content="交通費の精算計算を簡単に。ガソリン代、高速代、駐車場代などをまとめて計算でき、一人当たりの負担額も自動算出します。" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="交通費精算計算機" />
+    <meta name="twitter:description" content="交通費の精算計算を簡単に。複数人での移動費の割り勘に便利です。" />
+    
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
     <main class="calc">
       <h1 class="calc__title">交通費精算</h1>
+      
+      <!-- 構造化データ -->
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "交通費精算計算機",
+        "description": "交通費の精算計算を簡単に。ガソリン代、高速代、駐車場代などをまとめて計算でき、一人当たりの負担額も自動算出します。",
+        "url": "https://sharefare.example.com",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPY"
+        }
+      }
+      </script>
+      
       <form class="calc__form" novalidate>
         <table class="calc__table">
           <tbody>

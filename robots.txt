@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-Sitemap: https://mayuka-design.github.io/portfolio/sitemap.xml
+Sitemap: https://sharefare.example.com/sitemap.xml

@@ -291,6 +291,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (action === "clear") {
         applyClear();
         updateTotals();
+        return;
+      }
+      if (action === "save-history") {
+        addHistoryEntry();
       }
     });
   });
@@ -470,6 +474,177 @@ const formatDateTime = (isoString) => {
   return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 };
 
+// ============================================
+// 履歴機能
+// ============================================
+
+const HISTORY_KEY = "sharefare_history";
+
+const loadHistory = () => {
+  try {
+    const data = localStorage.getItem(HISTORY_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    console.error("Failed to load history:", e);
+    return [];
+  }
+};
+
+const saveHistory = (history) => {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.error("Failed to save history:", e);
+    alert("履歴の保存に失敗しました");
+  }
+};
+
+const buildHistoryEntry = () => {
+  return {
+    id: `hist_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    createdAt: new Date().toISOString(),
+    inputs: getCurrentSettings(),
+    results: {
+      fuelCost: toNumber(fields.fuelCost, 0),
+      nonFuelCost: toNumber(fields.nonFuelCost, 0),
+      totalCost: toNumber(fields.totalCost, 0),
+      perPersonCost: toNumber(fields.perPersonCost, 0)
+    }
+  };
+};
+
+const formatMonth = (isoString) => {
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  return `${year}/${month}`;
+};
+
+const renderHistorySummary = (history) => {
+  const summaryEl = document.getElementById("history-summary");
+  if (!summaryEl) return;
+
+  if (!history.length) {
+    summaryEl.innerHTML = "";
+    return;
+  }
+
+  const grouped = history.reduce((acc, entry) => {
+    const key = formatMonth(entry.createdAt);
+    if (!acc[key]) {
+      acc[key] = { total: 0, count: 0 };
+    }
+    acc[key].total += Number(entry.results?.totalCost || 0);
+    acc[key].count += 1;
+    return acc;
+  }, {});
+
+  const summaryHtml = Object.entries(grouped)
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([month, data]) => {
+      return `
+        <div class="history_summary-item">
+          <span>${month}</span>
+          <span>${data.total.toLocaleString()}円 (${data.count}件)</span>
+        </div>
+      `;
+    })
+    .join("");
+
+  summaryEl.innerHTML = summaryHtml;
+};
+
+const renderHistory = () => {
+  const history = loadHistory().sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt)
+  );
+  const listEl = document.getElementById("history-list");
+  if (!listEl) return;
+
+  if (!history.length) {
+    listEl.innerHTML = '<p class="history_empty">履歴がありません</p>';
+    renderHistorySummary([]);
+    return;
+  }
+
+  listEl.innerHTML = history
+    .map((entry) => {
+      const s = entry.inputs || {};
+      const total = Number(entry.results?.totalCost || 0);
+      const perPerson = Number(entry.results?.perPersonCost || 0);
+      const people = Number(entry.inputs?.peopleCount || 1);
+      return `
+        <div class="history_item">
+          <div class="history_info">
+            <div class="history_meta">${formatDateTime(entry.createdAt)}</div>
+            <div class="history_detail">
+              距:${s.distance || 0}km / ガ:${s.fuelPrice || 0}円 / 燃:${s.fuelEfficiency || 0}km/L / 高:${s.tollCost || 0}円 / 駐:${s.parkingCost || 0}円 / 他:${s.otherCost || 0}円 / 人:${people}人 / 一当:${perPerson.toLocaleString()}円 / 合:${total.toLocaleString()}円
+            </div>
+          </div>
+          <div class="history_actions">
+            <button
+              class="calc_button calc_button--mini"
+              type="button"
+              data-history-load="${entry.id}"
+            >
+              読込
+            </button>
+            <button
+              class="calc_button calc_button--mini calc_button--delete"
+              type="button"
+              data-history-delete="${entry.id}"
+            >
+              削除
+            </button>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  listEl.querySelectorAll("[data-history-load]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.historyLoad;
+      const entry = history.find((item) => item.id === id);
+      if (entry) {
+        applySettings(entry.inputs);
+        showToast("履歴を読み込みました");
+      }
+    });
+  });
+
+  listEl.querySelectorAll("[data-history-delete]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.historyDelete;
+      const nextHistory = history.filter((item) => item.id !== id);
+      saveHistory(nextHistory);
+      renderHistory();
+    });
+  });
+
+  renderHistorySummary(history);
+};
+
+const addHistoryEntry = () => {
+  const history = loadHistory();
+  history.unshift(buildHistoryEntry());
+  saveHistory(history);
+  renderHistory();
+  showToast("履歴に保存しました");
+
+  const historyContent = document.getElementById("history-content");
+  const historyToggle = document.getElementById("history-toggle");
+  if (
+    historyContent &&
+    !historyContent.classList.contains("history_content--open")
+  ) {
+    historyContent.classList.add("history_content--open");
+    if (historyToggle) {
+      historyToggle.querySelector(".history_toggle-icon").textContent = "▲";
+    }
+  }
+};
+
 // モーダル制御
 const modal = document.getElementById("preset-modal");
 const modalInput = document.getElementById("preset-name");
@@ -619,6 +794,24 @@ document.addEventListener("DOMContentLoaded", () => {
       : "▼";
   });
 
+  // 履歴セクションの開閉
+  document.getElementById("history-toggle")?.addEventListener("click", () => {
+    const content = document.getElementById("history-content");
+    const icon = document.querySelector(".history_toggle-icon");
+    content.classList.toggle("history_content--open");
+    icon.textContent = content.classList.contains("history_content--open")
+      ? "▲"
+      : "▼";
+  });
+
+  document.getElementById("history-clear")?.addEventListener("click", () => {
+    if (confirm("履歴をすべて削除しますか?")) {
+      saveHistory([]);
+      renderHistory();
+    }
+  });
+
   // 初期表示
   renderPresets();
+  renderHistory();
 });

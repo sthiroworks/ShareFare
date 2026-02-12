@@ -79,6 +79,28 @@
         </div>
       </section>
 
+      <section class="history" id="history-section" aria-label="計算履歴">
+        <div class="history_header">
+          <button class="history_toggle" id="history-toggle" type="button">
+            <span class="history_toggle-icon">▼</span>
+            計算履歴
+          </button>
+        </div>
+        <div class="history_content" id="history-content">
+          <div class="history_summary" id="history-summary"></div>
+          <div class="history_list" id="history-list">
+            <p class="history_empty">履歴がありません</p>
+          </div>
+          <button
+            class="calc_button calc_button--mini history_clear"
+            type="button"
+            id="history-clear"
+          >
+            履歴クリア
+          </button>
+        </div>
+      </section>
+
       <!-- Calculator -->
       <form class="calc_form" novalidate>
         <table class="calc_table">
@@ -98,7 +120,7 @@
                   value="100"
                 />
               </td>
-              <td class="calc_cell calc_cell--tight">
+              <td class="calc_cell calc_cell--tight" colspan="2">
                 <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
@@ -124,10 +146,6 @@
                   >
                     +1
                   </button>
-                </div>
-              </td>
-              <td class="calc_cell calc_cell--tight">
-                <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
                     type="button"
@@ -170,7 +188,7 @@
                   value="150"
                 />
               </td>
-              <td class="calc_cell calc_cell--tight">
+              <td class="calc_cell calc_cell--tight" colspan="2">
                 <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
@@ -188,10 +206,7 @@
                   >
                     +1
                   </button>
-                </div>
-              </td>
-              <td class="calc_cell calc_cell--tight">
-                <div class="calc_button-stack">
+                  <span class="calc_button-spacer" aria-hidden="true"></span>
                   <button
                     class="calc_button calc_button--mini"
                     type="button"
@@ -226,7 +241,7 @@
                   value="10"
                 />
               </td>
-              <td class="calc_cell calc_cell--tight">
+              <td class="calc_cell calc_cell--tight" colspan="2">
                 <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
@@ -244,10 +259,7 @@
                   >
                     +0.1
                   </button>
-                </div>
-              </td>
-              <td class="calc_cell calc_cell--tight">
-                <div class="calc_button-stack">
+                  <span class="calc_button-spacer" aria-hidden="true"></span>
                   <button
                     class="calc_button calc_button--mini"
                     type="button"
@@ -302,7 +314,7 @@
                   value="0"
                 />
               </td>
-              <td class="calc_cell calc_cell--tight">
+              <td class="calc_cell calc_cell--tight" colspan="2">
                 <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
@@ -320,10 +332,7 @@
                   >
                     +100
                   </button>
-                </div>
-              </td>
-              <td class="calc_cell calc_cell--tight">
-                <div class="calc_button-stack">
+                  <span class="calc_button-spacer" aria-hidden="true"></span>
                   <button
                     class="calc_button calc_button--mini"
                     type="button"
@@ -358,7 +367,7 @@
                   value="0"
                 />
               </td>
-              <td class="calc_cell calc_cell--tight">
+              <td class="calc_cell calc_cell--tight" colspan="2">
                 <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
@@ -384,10 +393,6 @@
                   >
                     +10
                   </button>
-                </div>
-              </td>
-              <td class="calc_cell calc_cell--tight">
-                <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
                     type="button"
@@ -430,7 +435,7 @@
                   value="0"
                 />
               </td>
-              <td class="calc_cell calc_cell--tight">
+              <td class="calc_cell calc_cell--tight" colspan="2">
                 <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
@@ -456,10 +461,6 @@
                   >
                     +10
                   </button>
-                </div>
-              </td>
-              <td class="calc_cell calc_cell--tight">
-                <div class="calc_button-stack">
                   <button
                     class="calc_button calc_button--mini"
                     type="button"
@@ -599,6 +600,13 @@
             data-action="clear"
           >
             クリア
+          </button>
+          <button
+            class="calc_button calc_button--action"
+            type="button"
+            data-action="save-history"
+          >
+            履歴に保存
           </button>
           <button
             class="calc_button calc_button--action calc_button--preset"

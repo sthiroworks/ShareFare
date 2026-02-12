@@ -774,27 +774,47 @@ const saveNewPreset = () => {
 };
 
 // ボタンスタックの列数を動的に調整
+// ボタンスタックの列数を動的に調整
 const adjustCalcButtonStackColumns = () => {
-  document.querySelectorAll('.calc_button-stack').forEach(stack => {
-    const buttons = Array.from(stack.children).filter(child => child.tagName === 'BUTTON');
-    
+  document.querySelectorAll(".calc_button-stack").forEach((stack) => {
+    const buttons = Array.from(stack.children).filter(
+      (child) => child.tagName === "BUTTON"
+    );
+
     if (buttons.length === 0) return;
-    
+
     // 正負のボタン分け点を探す（最初の負数ボタンの位置）
-    let columnCount = 3;
+    let negativeIndex = -1;
     for (let i = 0; i < buttons.length; i++) {
-      if (buttons[i].dataset.delta?.toString().startsWith('-')) {
-        columnCount = i;
+      if (buttons[i].dataset.delta?.toString().startsWith("-")) {
+        negativeIndex = i;
         break;
       }
     }
-    
-    // ボタン数が偶数で列数が未設定の場合は、半分が列数
-    if (columnCount === 3 && buttons.length % 2 === 0) {
-      columnCount = buttons.length / 2;
-    }
-    
-    stack.style.gridTemplateColumns = `repeat(${Math.min(columnCount, 3)}, 1fr)`;
+
+    // 上段と下段のボタン数を取得
+    const positiveCount = negativeIndex > 0 ? negativeIndex : buttons.length;
+    const negativeCount = buttons.length - positiveCount;
+    const rowCount = Math.max(positiveCount, negativeCount);
+
+    // グリッドを2列に設定
+    stack.style.gridTemplateColumns = "1fr 1fr";
+
+    // 各ボタンの行列を明示的に設定
+    buttons.forEach((btn, idx) => {
+      if (idx < positiveCount) {
+        // 上段：左列
+        const row = (idx % rowCount) + 1;
+        btn.style.gridColumn = "1";
+        btn.style.gridRow = row;
+      } else {
+        // 下段：右列
+        const negBtnIdx = idx - positiveCount;
+        const row = (negBtnIdx % rowCount) + 1;
+        btn.style.gridColumn = "2";
+        btn.style.gridRow = row;
+      }
+    });
   });
 };
 

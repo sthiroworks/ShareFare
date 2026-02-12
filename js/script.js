@@ -539,13 +539,23 @@ const renderHistorySummary = (history) => {
     return acc;
   }, {});
 
-  const summaryHtml = Object.entries(grouped)
-    .sort((a, b) => b[0].localeCompare(a[0]))
+  const summaryEntries = Object.entries(grouped).sort((a, b) =>
+    b[0].localeCompare(a[0])
+  );
+  const maxTotal = Math.max(...summaryEntries.map(([, data]) => data.total));
+
+  const summaryHtml = summaryEntries
     .map(([month, data]) => {
+      const ratio = maxTotal > 0 ? (data.total / maxTotal) * 100 : 0;
       return `
         <div class="history_summary-item">
-          <span>${month}</span>
-          <span>${data.total.toLocaleString()}円 (${data.count}件)</span>
+          <div class="history_summary-meta">
+            <span>${month}</span>
+            <span>${data.total.toLocaleString()}円 (${data.count}件)</span>
+          </div>
+          <div class="history_summary-bar">
+            <span class="history_summary-fill" style="width: ${ratio}%;"></span>
+          </div>
         </div>
       `;
     })
@@ -578,7 +588,7 @@ const renderHistory = () => {
           <div class="history_info">
             <div class="history_meta">${formatDateTime(entry.createdAt)}</div>
             <div class="history_detail">
-              距:${s.distance || 0}km / ガ:${s.fuelPrice || 0}円 / 燃:${s.fuelEfficiency || 0}km/L / 高:${s.tollCost || 0}円 / 駐:${s.parkingCost || 0}円 / 他:${s.otherCost || 0}円 / 人:${people}人 / 一当:${perPerson.toLocaleString()}円 / 合:${total.toLocaleString()}円
+              走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人 / ${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
             </div>
           </div>
           <div class="history_actions">

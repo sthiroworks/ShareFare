@@ -456,7 +456,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 16px 20px;
+  padding: 16px 6px;
   width: 100%;
 }
 
@@ -470,17 +470,20 @@ body::before {
 }
 
 .history_clear {
-  display: block;
   width: auto;
   padding: 0 10px;
-  margin-left: auto;
-  margin-top: 6px;
+  margin: 0 6px 6px auto;
+  display: block;
+  align-self: flex-end;
 }
 
 .history_content {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 0 6px;
 }
 
 .history_content--open {
@@ -490,21 +493,41 @@ body::before {
 .history_summary {
   display: grid;
   gap: 6px;
-  padding: 6px 6px 12px;
+  padding: 6px 0 12px;
   color: var(--color-text-sub);
   font-size: 12px;
 }
 
 .history_summary-item {
+  display: grid;
+  gap: 6px;
+}
+
+.history_summary-meta {
   display: flex;
   justify-content: space-between;
   gap: 12px;
 }
 
+.history_summary-bar {
+  height: 8px;
+  background: var(--color-chart-track);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.history_summary-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-chart-fuel), #60a5fa);
+  transition: width 0.25s ease;
+}
+
 .history_list {
   display: grid;
   gap: 10px;
-  padding: 0 6px 6px;
+  padding: 0 0 6px;
 }
 
 .history_empty {

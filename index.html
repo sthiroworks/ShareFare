@@ -587,9 +587,63 @@
           >
             クリア
           </button>
+          <button
+            class="calc_button calc_button--action calc_button--preset"
+            type="button"
+            data-action="save-preset"
+          >
+            ⭐ プリセット保存
+          </button>
         </div>
       </form>
+
+      <!-- プリセット一覧 -->
+      <section class="presets" id="presets-section">
+        <button class="presets_toggle" id="presets-toggle" type="button">
+          <span class="presets_toggle-icon">▼</span>
+          お気に入り設定
+        </button>
+        <div class="presets_content" id="presets-content">
+          <div class="presets_list" id="presets-list">
+            <p class="presets_empty">プリセットが保存されていません</p>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- プリセット保存モーダル -->
+    <div class="modal" id="preset-modal">
+      <div class="modal_overlay" id="modal-overlay"></div>
+      <div class="modal_content">
+        <h2 class="modal_title">プリセットを保存</h2>
+        <div class="modal_body">
+          <label class="modal_label" for="preset-name">プリセット名</label>
+          <input
+            class="modal_input"
+            id="preset-name"
+            type="text"
+            placeholder="例: 通勤用、週末ドライブなど"
+            maxlength="30"
+          />
+        </div>
+        <div class="modal_actions">
+          <button
+            class="calc_button calc_button--action"
+            type="button"
+            id="modal-cancel"
+          >
+            キャンセル
+          </button>
+          <button
+            class="calc_button calc_button--action calc_button--preset"
+            type="button"
+            id="modal-save"
+          >
+            保存
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script src="js/script.js"></script>
   </body>

@@ -234,3 +234,208 @@ document.addEventListener("DOMContentLoaded", () => {
   setupHighlight();
   updateTotals();
 });
+
+// ============================================
+// プリセット機能
+// ============================================
+
+const STORAGE_KEY = "sharefare_presets";
+
+// プリセットをLocalStorageから読み込み
+const loadPresets = () => {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    console.error("Failed to load presets:", e);
+    return [];
+  }
+};
+
+// プリセットをLocalStorageに保存
+const savePresets = (presets) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(presets));
+  } catch (e) {
+    console.error("Failed to save presets:", e);
+    alert("プリセットの保存に失敗しました");
+  }
+};
+
+// 現在の設定値を取得
+const getCurrentSettings = () => ({
+  distance: fields.distance.value,
+  fuelPrice: fields.fuelPrice.value,
+  fuelEfficiency: fields.fuelEfficiency.value,
+  tollCost: fields.tollCost.value,
+  parkingCost: fields.parkingCost.value,
+  otherCost: fields.otherCost.value,
+  peopleCount: fields.peopleCount.value
+});
+
+// 設定値を読み込み
+const applySettings = (settings) => {
+  Object.entries(settings).forEach(([key, value]) => {
+    if (fields[key]) {
+      fields[key].value = value;
+    }
+  });
+  updateTotals();
+};
+
+// プリセット一覧を表示
+const renderPresets = () => {
+  const presets = loadPresets();
+  const container = document.getElementById("presets-list");
+
+  if (presets.length === 0) {
+    container.innerHTML =
+      '<p class="presets_empty">プリセットが保存されていません</p>';
+    return;
+  }
+
+  container.innerHTML = presets
+    .map(
+      (preset, index) => `
+      <div class="preset-item">
+        <div class="preset-item_info">
+          <div class="preset-item_name">${escapeHtml(preset.name)}</div>
+          <div class="preset-item_details">
+            ${preset.settings.distance}km / ${preset.settings.fuelEfficiency}km/L / ${preset.settings.peopleCount}人
+          </div>
+        </div>
+        <div class="preset-item_actions">
+          <button
+            class="calc_button calc_button--mini"
+            type="button"
+            data-preset-load="${index}"
+          >
+            読込
+          </button>
+          <button
+            class="calc_button calc_button--mini calc_button--delete"
+            type="button"
+            data-preset-delete="${index}"
+          >
+            削除
+          </button>
+        </div>
+      </div>
+    `
+    )
+    .join("");
+
+  // イベント設定
+  container.querySelectorAll("[data-preset-load]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const index = parseInt(btn.dataset.presetLoad);
+      const preset = presets[index];
+      if (preset) {
+        applySettings(preset.settings);
+      }
+    });
+  });
+
+  container.querySelectorAll("[data-preset-delete]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const index = parseInt(btn.dataset.presetDelete);
+      if (confirm("このプリセットを削除しますか?")) {
+        deletePreset(index);
+      }
+    });
+  });
+};
+
+// プリセットを削除
+const deletePreset = (index) => {
+  const presets = loadPresets();
+  presets.splice(index, 1);
+  savePresets(presets);
+  renderPresets();
+};
+
+// HTMLエスケープ
+const escapeHtml = (str) => {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+};
+
+// モーダル制御
+const modal = document.getElementById("preset-modal");
+const modalInput = document.getElementById("preset-name");
+const modalOverlay = document.getElementById("modal-overlay");
+const modalCancel = document.getElementById("modal-cancel");
+const modalSave = document.getElementById("modal-save");
+
+const openModal = () => {
+  modal.classList.add("modal--open");
+  modalInput.value = "";
+  setTimeout(() => modalInput.focus(), 100);
+};
+
+const closeModal = () => {
+  modal.classList.remove("modal--open");
+};
+
+const saveNewPreset = () => {
+  const name = modalInput.value.trim();
+  if (!name) {
+    alert("プリセット名を入力してください");
+    return;
+  }
+
+  const presets = loadPresets();
+  presets.push({
+    name,
+    settings: getCurrentSettings(),
+    createdAt: new Date().toISOString()
+  });
+
+  savePresets(presets);
+  renderPresets();
+  closeModal();
+
+  // プリセットセクションを開く
+  const presetsContent = document.getElementById("presets-content");
+  const presetsToggle = document.getElementById("presets-toggle");
+  if (!presetsContent.classList.contains("presets_content--open")) {
+    presetsContent.classList.add("presets_content--open");
+    presetsToggle.querySelector(".presets_toggle-icon").textContent = "▲";
+  }
+};
+
+// イベントリスナー
+document.addEventListener("DOMContentLoaded", () => {
+  // プリセット保存ボタン
+  document
+    .querySelector('[data-action="save-preset"]')
+    ?.addEventListener("click", openModal);
+
+  // モーダル閉じる
+  modalOverlay?.addEventListener("click", closeModal);
+  modalCancel?.addEventListener("click", closeModal);
+
+  // モーダル保存
+  modalSave?.addEventListener("click", saveNewPreset);
+
+  // Enter キーで保存
+  modalInput?.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      saveNewPreset();
+    }
+  });
+
+  // プリセットセクションの開閉
+  document.getElementById("presets-toggle")?.addEventListener("click", () => {
+    const content = document.getElementById("presets-content");
+    const icon = document.querySelector(".presets_toggle-icon");
+    content.classList.toggle("presets_content--open");
+    icon.textContent = content.classList.contains("presets_content--open")
+      ? "▲"
+      : "▼";
+  });
+
+  // 初期表示
+  renderPresets();
+});

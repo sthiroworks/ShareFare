@@ -1,122 +1,44 @@
 /* ============================================
-   CSS変数定義ファイル
-   カラー・サイズ・アニメーション時間の定義
+   ShareFare - CSS変数定義ファイル
+   交通費精算アプリのカラー・シャドウ定義
    ============================================ */
 :root {
-  /* メインカラー */
-  --color-primary: #b8697e;
-  --color-primary-light: #d4a8b3;
-  --color-primary-lighter: #f0dfe9;
+  /* 背景色 */
+  --color-bg-1: #0f172a;
+  --color-bg-2: #111827;
+  --color-bg-3: #1f2937;
 
-  /* アクセントカラー */
-  --color-line: #06c755;
-  --color-accent: #c2a2a0;
-
-  /* ピンク系カラー（ボタン・カテゴリ用） */
-  --color-pink-lightest: #ffc0cb;
-  --color-pink-light: #ffb3c1;
-  --color-pink-medium: #ff9ab5;
-  --color-pink-dark: #ff8aab;
-  --color-pink-text: #d9497b;
-  --color-pink-darker: #ffa5b3;
-
-  /* Instagram カラー */
-  --color-instagram-1: #f9ce34;
-  --color-instagram-2: #ee2a7b;
-  --color-instagram-3: #6228d7;
-  --color-instagram-pink: #e4405f;
+  /* カード・コンポーネント */
+  --color-card: rgba(17, 25, 40, 0.75);
+  --color-card-border: rgba(148, 163, 184, 0.2);
 
   /* テキストカラー */
-  --color-text-dark: #2c2c2c;
-  --color-text-main: #5a5a5a;
-  --color-text-sub: #666;
+  --color-text: #e2e8f0;
+  --color-text-sub: #94a3b8;
 
-  /* 背景・ボーダー */
-  --color-white: #fff;
-  --color-border: #ddd;
-  --color-border-light: #eee;
-  --color-bg-light: #faf5f2;
-  --color-bg-gradient-1: #f5f3f1;
-  --color-bg-gradient-2: #faf8f6;
-  --color-bg-profile: #f5f1ed;
-  --color-bg-pink-light-1: rgba(255, 250, 252, 0.3);
-  --color-bg-pink-light-2: rgba(255, 252, 254, 0.3);
-  --color-bg-pink-medium-1: rgba(255, 250, 252, 0.5);
-  --color-bg-pink-medium-2: rgba(255, 252, 254, 0.5);
+  /* 入力・出力フィールド */
+  --color-input: rgba(30, 41, 59, 0.8);
+  --color-output: rgba(15, 23, 42, 0.7);
+  --color-border: rgba(148, 163, 184, 0.35);
 
-  /* 装飾・影用の半透明色 */
-  --color-white-05: rgba(255, 255, 255, 0.05);
-  --color-white-08: rgba(255, 255, 255, 0.08);
-  --color-white-1: rgba(255, 255, 255, 0.1);
-  --color-white-12: rgba(255, 255, 255, 0.12);
-  --color-white-15: rgba(255, 255, 255, 0.15);
-  --color-white-2: rgba(255, 255, 255, 0.2);
-  --color-white-25: rgba(255, 255, 255, 0.25);
-  --color-white-3: rgba(255, 255, 255, 0.3);
-  --color-white-35: rgba(255, 255, 255, 0.35);
-  --color-white-4: rgba(255, 255, 255, 0.4);
-  --color-white-45: rgba(255, 255, 255, 0.45);
-  --color-white-5: rgba(255, 255, 255, 0.5);
-  --color-white-65: rgba(255, 255, 255, 0.65);
-  --color-white-7: rgba(255, 255, 255, 0.7);
-  --color-white-8: rgba(255, 255, 255, 0.8);
-  --color-white-0: rgba(255, 255, 255, 0);
+  /* アクセントカラー */
+  --color-accent: #38bdf8;
+  --color-accent-2: #fbbf24;
 
-  --color-black-0: rgba(0, 0, 0, 0);
-  --color-black-08: rgba(0, 0, 0, 0.08);
-  --color-black-1: rgba(0, 0, 0, 0.1);
-  --color-black-15: rgba(0, 0, 0, 0.15);
-  --color-black-3: rgba(0, 0, 0, 0.3);
+  /* ボタンカラー */
+  --color-button: #2563eb;
+  --color-button-hover: #1d4ed8;
+  --color-button-ghost: rgba(56, 189, 248, 0.15);
 
-  /* 特殊な装飾色（虹色グラデーション用） */
-  --color-rainbow-1: rgba(255, 150, 200, 0.1);
-  --color-rainbow-2: rgba(255, 120, 180, 0.09);
-  --color-rainbow-3: rgba(150, 200, 255, 0.1);
-  --color-rainbow-4: rgba(100, 200, 255, 0.09);
-  --color-rainbow-5: rgba(150, 255, 180, 0.08);
-  --color-rainbow-6: rgba(200, 255, 150, 0.08);
-  --color-rainbow-7: rgba(255, 200, 150, 0.08);
-  --color-glow-blue: rgba(200, 200, 255, 0.1);
-  --color-glow-blue-12: rgba(200, 200, 255, 0.12);
+  /* プリセットボタン */
+  --color-preset-1: #8b5cf6;
+  --color-preset-2: #ec4899;
 
-  /* ボタン・カード等の影色 */
-  --color-shadow-pink: rgba(255, 176, 193, 0.3);
-  --color-shadow-pink-5: rgba(255, 176, 193, 0.5);
-  --color-shadow-pink-15: rgba(238, 42, 123, 0.15);
-  --color-shadow-pink-4: rgba(238, 42, 123, 0.4);
-  --color-shadow-pink-medium-4: rgba(255, 154, 181, 0.4);
-  --color-shadow-primary-3: rgba(184, 105, 126, 0.3);
-  --color-shadow-primary-4: rgba(184, 105, 126, 0.4);
-  --color-shadow-line: rgba(6, 199, 85, 0.4);
-  --color-shadow-beige: rgba(218, 165, 120, 0.2);
-  --color-shadow-beige-3: rgba(218, 165, 120, 0.3);
-  --color-shadow-lavender: rgba(220, 200, 210, 0.05);
-  --color-shadow-lavender-08: rgba(210, 190, 200, 0.08);
-  --color-shadow-lavender-1: rgba(220, 200, 210, 0.1);
-  --color-shadow-lavender-12: rgba(220, 200, 210, 0.12);
-  --color-shadow-lavender-15: rgba(220, 200, 210, 0.15);
-  --color-shadow-lavender-2: rgba(220, 200, 210, 0.2);
-  --color-shadow-card: rgba(200, 180, 190, 0.08);
-  --color-shadow-card-15: rgba(200, 180, 190, 0.15);
-  --color-shadow-gold: rgba(255, 215, 0, 0.15);
+  /* 削除ボタン */
+  --color-delete-1: #ef4444;
+  --color-delete-2: #dc2626;
 
-  /* スペーシング */
-  --spacing-sm: 4px;
-  --spacing-md: 12px;
-  --spacing-lg: 20px;
-  --spacing-xl: 40px;
-
-  /* ブレークポイント（media queryでは直接参照不可） */
-  --breakpoint-md: 768px;
-
-  /* アニメーション時間（JavaScript からセット） */
-  --splash-fadein-time: 0.8s;
-  --splash-fadeout-time: 0.8s;
-  --content-fade-time: 1.6s;
-
-  /* 泡アニメーション */
-  --bubble-opacity: 0.1;
-  --bubble-glow-pink: rgba(255, 150, 200, 0.1);
-  --bubble-glow-blue: rgba(150, 200, 255, 0.08);
-  --bubble-glow-green: rgba(200, 255, 180, 0.07);
+  /* シャドウ */
+  --shadow-card: 0 30px 60px rgba(15, 23, 42, 0.45);
+  --shadow-glow: 0 0 18px rgba(56, 189, 248, 0.4);
 }

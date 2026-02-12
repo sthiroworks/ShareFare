@@ -327,6 +327,13 @@ const renderPresets = () => {
             読込
           </button>
           <button
+            class="calc_button calc_button--mini"
+            type="button"
+            data-preset-edit="${index}"
+          >
+            編集
+          </button>
+          <button
             class="calc_button calc_button--mini calc_button--delete"
             type="button"
             data-preset-delete="${index}"
@@ -357,6 +364,16 @@ const renderPresets = () => {
       const index = parseInt(btn.dataset.presetDelete);
       if (confirm("このプリセットを削除しますか?")) {
         deletePreset(index);
+      }
+    });
+  });
+
+  container.querySelectorAll("[data-preset-edit]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const index = parseInt(btn.dataset.presetEdit);
+      const preset = presets[index];
+      if (preset) {
+        openModal({ mode: "edit", index, name: preset.name });
       }
     });
   });
@@ -392,11 +409,13 @@ const formatDateTime = (isoString) => {
 // モーダル制御
 const modal = document.getElementById("preset-modal");
 const modalInput = document.getElementById("preset-name");
+const modalTitle = document.querySelector(".modal_title");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalCancel = document.getElementById("modal-cancel");
 const modalSave = document.getElementById("modal-save");
 const toast = document.getElementById("toast");
 let toastTimer;
+let editingPresetIndex = null;
 
 const showToast = (message) => {
   if (!toast) return;
@@ -410,14 +429,21 @@ const showToast = (message) => {
   }, 2200);
 };
 
-const openModal = () => {
+const openModal = ({ mode = "create", index = null, name = "" } = {}) => {
   modal.classList.add("modal--open");
-  modalInput.value = "";
+  editingPresetIndex = mode === "edit" ? index : null;
+  modalInput.value = name || "";
+  if (modalTitle) {
+    modalTitle.textContent =
+      mode === "edit" ? "プリセット名を編集" : "プリセットを保存";
+  }
+  modalSave.textContent = mode === "edit" ? "更新" : "保存";
   setTimeout(() => modalInput.focus(), 100);
 };
 
 const closeModal = () => {
   modal.classList.remove("modal--open");
+  editingPresetIndex = null;
 };
 
 const saveNewPreset = () => {
@@ -428,15 +454,24 @@ const saveNewPreset = () => {
   }
 
   const presets = loadPresets();
-  presets.push({
-    name,
-    settings: getCurrentSettings(),
-    createdAt: new Date().toISOString()
-  });
+  const wasEditing = editingPresetIndex !== null;
+  if (wasEditing) {
+    presets[editingPresetIndex].name = name;
+  } else {
+    presets.push({
+      name,
+      settings: getCurrentSettings(),
+      createdAt: new Date().toISOString()
+    });
+  }
 
   savePresets(presets);
   renderPresets();
   closeModal();
+
+  if (wasEditing) {
+    showToast("プリセット名を更新しました");
+  }
 
   // プリセットセクションを開く
   const presetsContent = document.getElementById("presets-content");
@@ -452,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // プリセット保存ボタン
   document
     .querySelector('[data-action="save-preset"]')
-    ?.addEventListener("click", openModal);
+    ?.addEventListener("click", () => openModal({ mode: "create" }));
 
   // モーダル閉じる
   modalOverlay?.addEventListener("click", closeModal);

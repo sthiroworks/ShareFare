@@ -317,6 +317,8 @@ body::before {
   background: rgba(30, 41, 59, 0.6);
   border: 1px solid var(--color-card-border);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .presets_toggle {
@@ -376,6 +378,7 @@ body::before {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   transition: all 0.2s ease;
+  gap: 12px;
 }
 
 .preset-item:hover {
@@ -391,6 +394,8 @@ body::before {
 
 .preset-item_info {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .preset-item_name {
@@ -398,16 +403,23 @@ body::before {
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .preset-item_details {
   font-size: 12px;
   color: var(--color-text-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .preset-item_actions {
   display: flex;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .preset-item_actions .calc_button--mini {
@@ -582,5 +594,48 @@ body::before {
     box-shadow:
       0 0 12px rgba(56, 189, 248, 0.4),
       0 6px 10px rgba(37, 99, 235, 0.25);
+  }
+
+  .preset-item {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .preset-item_name {
+    font-size: 14px;
+  }
+
+  .preset-item_details {
+    font-size: 11px;
+  }
+
+  .preset-item_actions .calc_button--mini {
+    width: 50px;
+    font-size: 10px;
+    padding: 0 4px;
+  }
+
+  .presets_list {
+    padding: 12px;
+  }
+
+  .modal_content {
+    padding: 20px;
+    max-width: calc(100vw - 40px);
+  }
+
+  .modal_title {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .modal_input {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .modal_actions .calc_button {
+    padding: 0 16px;
+    font-size: 13px;
   }
 }

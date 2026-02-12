@@ -181,7 +181,7 @@ body::before {
 /* Buttons */
 .calc_button {
   width: 100%;
-  height: 36px;
+  height: 38px;
   border: 1px solid rgba(59, 130, 246, 0.5);
   border-radius: 10px;
   background: linear-gradient(135deg, var(--color-button), #1e40af);
@@ -210,7 +210,7 @@ body::before {
 }
 
 .calc_button--mini {
-  height: 28px;
+  height: 30px;
   font-size: 12px;
   padding: 0;
   width: 100%;
@@ -250,7 +250,7 @@ body::before {
 }
 
 .calc_button-spacer {
-  height: 28px;
+  height: 30px;
 }
 
 .calc_button:hover {
@@ -817,7 +817,7 @@ body::before {
 
   .calc_input,
   .calc_button {
-    height: 32px;
+    height: 34px;
     font-size: 13px;
   }
 
@@ -830,7 +830,7 @@ body::before {
   }
 
   .calc_button--mini {
-    height: 26px;
+    height: 28px;
     font-size: 9px;
     padding: 0 6px;
     box-shadow:
@@ -840,7 +840,7 @@ body::before {
   }
 
   .calc_button-spacer {
-    height: 26px;
+    height: 28px;
   }
 
   .calc_button--mini:hover {
@@ -896,12 +896,17 @@ body::before {
   }
 
   .history {
-    padding: 14px;
+    padding: 0;
   }
 
   .history_header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+  }
+
+  .history_toggle {
+    padding: 16px 20px;
   }
 
   .history_toggle:hover {

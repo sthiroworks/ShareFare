@@ -433,7 +433,7 @@ body::before {
   margin: 24px auto 0;
   padding: 0;
   border-radius: 16px;
-  background: rgba(17, 25, 40, 0.6);
+  background: rgba(30, 41, 59, 0.6);
   border: 1px solid var(--color-card-border);
   overflow: hidden;
 }

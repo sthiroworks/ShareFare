@@ -315,7 +315,7 @@ const renderPresets = () => {
             走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人 / ${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
           </div>
           <div class="preset-item_date">
-            ${preset.createdAt ? formatDateTime(preset.createdAt) : ""}
+            ${preset.createdAt ? "作成日:" + formatDateTime(preset.createdAt) : ""}
           </div>
         </div>
         <div class="preset-item_actions">
@@ -454,22 +454,64 @@ const saveNewPreset = () => {
   }
 
   const presets = loadPresets();
+  const nowIso = new Date().toISOString();
+  const existingIndex = presets.findIndex((preset) => preset.name === name);
   const wasEditing = editingPresetIndex !== null;
+  let didOverwrite = false;
+
+  const willOverwrite = wasEditing
+    ? existingIndex !== -1 && existingIndex !== editingPresetIndex
+    : existingIndex !== -1;
+
+  if (willOverwrite) {
+    const ok = confirm("同名のプリセットがあります。上書きしますか?");
+    if (!ok) return;
+  }
+
   if (wasEditing) {
-    presets[editingPresetIndex].name = name;
+    const currentPreset = presets[editingPresetIndex];
+    if (!currentPreset) {
+      closeModal();
+      return;
+    }
+
+    if (existingIndex !== -1 && existingIndex !== editingPresetIndex) {
+      presets[existingIndex] = {
+        ...presets[existingIndex],
+        name,
+        settings: currentPreset.settings,
+        createdAt: currentPreset.createdAt
+      };
+      presets.splice(editingPresetIndex, 1);
+      didOverwrite = true;
+    } else {
+      presets[editingPresetIndex].name = name;
+    }
   } else {
-    presets.push({
-      name,
-      settings: getCurrentSettings(),
-      createdAt: new Date().toISOString()
-    });
+    if (existingIndex !== -1) {
+      presets[existingIndex] = {
+        ...presets[existingIndex],
+        name,
+        settings: getCurrentSettings(),
+        createdAt: nowIso
+      };
+      didOverwrite = true;
+    } else {
+      presets.push({
+        name,
+        settings: getCurrentSettings(),
+        createdAt: nowIso
+      });
+    }
   }
 
   savePresets(presets);
   renderPresets();
   closeModal();
 
-  if (wasEditing) {
+  if (didOverwrite) {
+    showToast("同名プリセットを上書きしました");
+  } else if (wasEditing) {
     showToast("プリセット名を更新しました");
   }
 

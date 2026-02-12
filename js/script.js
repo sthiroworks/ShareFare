@@ -380,7 +380,8 @@ const renderPresets = () => {
         <div class="preset-item_info">
           <div class="preset-item_name">${escapeHtml(preset.name)}</div>
           <div class="preset-item_details">
-            走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人 / ${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
+            合計:${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
+            <br>走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人
           </div>
           <div class="preset-item_date">
             ${preset.createdAt ? "作成日:" + formatDateTime(preset.createdAt) : ""}
@@ -536,7 +537,7 @@ const renderHistorySummary = (history) => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     const key = `${year}/${month}/${day}`;
-    
+
     if (!acc[key]) {
       acc[key] = { total: 0, count: 0 };
     }
@@ -582,7 +583,9 @@ const renderHistory = () => {
   }
 
   // 最大額を計算
-  const maxTotal = Math.max(...history.map(e => Number(e.results?.totalCost || 0)));
+  const maxTotal = Math.max(
+    ...history.map((e) => Number(e.results?.totalCost || 0))
+  );
 
   listEl.innerHTML = history
     .map((entry) => {
@@ -596,7 +599,8 @@ const renderHistory = () => {
           <div class="history_info">
             <div class="history_meta">${formatDateTime(entry.createdAt)}</div>
             <div class="history_detail">
-              走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人 / ${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
+              合計:${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
+              <br>走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人
             </div>
           </div>
           <div class="history_actions">

@@ -312,12 +312,12 @@ body::before {
 
 /* プリセットセクション */
 .presets {
-  margin-top: 24px;
+  max-width: 820px;
+  margin: 24px auto 0;
   border-radius: 16px;
   background: rgba(30, 41, 59, 0.6);
   border: 1px solid var(--color-card-border);
   overflow: hidden;
-  width: 100%;
   box-sizing: border-box;
 }
 

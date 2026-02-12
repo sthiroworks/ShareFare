@@ -773,8 +773,38 @@ const saveNewPreset = () => {
   }
 };
 
+// ボタンスタックの列数を動的に調整
+const adjustCalcButtonStackColumns = () => {
+  document.querySelectorAll('.calc_button-stack').forEach(stack => {
+    const buttons = Array.from(stack.children).filter(child => child.tagName === 'BUTTON');
+    
+    if (buttons.length === 0) return;
+    
+    // 正負のボタン分け点を探す（最初の負数ボタンの位置）
+    let columnCount = 3;
+    for (let i = 0; i < buttons.length; i++) {
+      if (buttons[i].dataset.delta?.toString().startsWith('-')) {
+        columnCount = i;
+        break;
+      }
+    }
+    
+    // ボタン数が偶数で列数が未設定の場合は、半分が列数
+    if (columnCount === 3 && buttons.length % 2 === 0) {
+      columnCount = buttons.length / 2;
+    }
+    
+    stack.style.gridTemplateColumns = `repeat(${Math.min(columnCount, 3)}, 1fr)`;
+  });
+};
+
 // イベントリスナー
 document.addEventListener("DOMContentLoaded", () => {
+  // ボタンスタックの列数を調整（DOM完全ロード後）
+  setTimeout(() => {
+    adjustCalcButtonStackColumns();
+  }, 0);
+
   // プリセット保存ボタン
   document
     .querySelector('[data-action="save-preset"]')

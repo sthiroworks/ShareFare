@@ -206,7 +206,7 @@ body::before {
   display: grid;
   gap: 6px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  min-width: 180px;
+  width: 100%;
 }
 
 .calc_button--mini {

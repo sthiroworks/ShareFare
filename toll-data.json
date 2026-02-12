@@ -1,0 +1,106 @@
+{
+  "routes": [
+    {
+      "start": "東京",
+      "end": "品川",
+      "distance": 8,
+      "price": 600
+    },
+    {
+      "start": "品川",
+      "end": "渋谷",
+      "distance": 5,
+      "price": 500
+    },
+    {
+      "start": "渋谷",
+      "end": "新宿",
+      "distance": 4,
+      "price": 500
+    },
+    {
+      "start": "新宿",
+      "end": "池袋",
+      "distance": 5,
+      "price": 500
+    },
+    {
+      "start": "東京",
+      "end": "新宿",
+      "distance": 9,
+      "price": 700
+    },
+    {
+      "start": "東京",
+      "end": "渋谷",
+      "distance": 8,
+      "price": 600
+    },
+    {
+      "start": "川口",
+      "end": "東京",
+      "distance": 15,
+      "price": 1000
+    },
+    {
+      "start": "蓮田",
+      "end": "川口",
+      "distance": 15,
+      "price": 900
+    },
+    {
+      "start": "八王子",
+      "end": "相模湖",
+      "distance": 30,
+      "price": 1200
+    },
+    {
+      "start": "相模湖",
+      "end": "諏訪",
+      "distance": 80,
+      "price": 2500
+    },
+    {
+      "start": "諏訪",
+      "end": "甲府",
+      "distance": 45,
+      "price": 1800
+    },
+    {
+      "start": "甲府",
+      "end": "小淵沢",
+      "distance": 30,
+      "price": 1500
+    },
+    {
+      "start": "浦和",
+      "end": "久喜",
+      "distance": 20,
+      "price": 1000
+    },
+    {
+      "start": "久喜",
+      "end": "栃木",
+      "distance": 35,
+      "price": 1400
+    },
+    {
+      "start": "西宮",
+      "end": "垂水",
+      "distance": 12,
+      "price": 800
+    },
+    {
+      "start": "垂水",
+      "end": "明石",
+      "distance": 10,
+      "price": 700
+    },
+    {
+      "start": "尼崎",
+      "end": "西宮",
+      "distance": 15,
+      "price": 1000
+    }
+  ]
+}

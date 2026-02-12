@@ -4,6 +4,7 @@ const fields = {
   fuelPrice: document.getElementById("fuel-price"),
   fuelEfficiency: document.getElementById("fuel-efficiency"),
   fuelCost: document.getElementById("fuel-cost"),
+  tollDistance: document.getElementById("toll-distance"),
   tollCost: document.getElementById("toll-cost"),
   parkingCost: document.getElementById("parking-cost"),
   otherCost: document.getElementById("other-cost"),
@@ -55,6 +56,7 @@ const clearValues = {
   distance: "0",
   fuelEfficiency: "1.0",
   fuelPrice: "0",
+  tollDistance: "0",
   tollCost: "0",
   parkingCost: "0",
   otherCost: "0",
@@ -63,6 +65,28 @@ const clearValues = {
 
 // Read-only outputs
 const outputFields = ["fuelCost", "nonFuelCost", "totalCost", "perPersonCost"];
+
+// IC料金データベース（外部JSONから動的に読み込み）
+// 高速料金計算データベース（距離ベース）
+const tollPriceTable = [
+  { maxDistance: 10, price: 500 },
+  { maxDistance: 20, price: 1000 },
+  { maxDistance: 30, price: 1500 },
+  { maxDistance: 50, price: 2000 },
+  { maxDistance: 100, price: 3500 },
+  { maxDistance: 150, price: 5000 },
+  { maxDistance: 200, price: 6500 },
+  { maxDistance: 300, price: 8500 },
+  { maxDistance: 9999, price: 10000 }
+];
+
+// 距離から料金を計算
+const calculateTollPrice = (distance) => {
+  if (!distance || distance <= 0) return 0;
+  const numDistance = Number(distance);
+  const entry = tollPriceTable.find((item) => numDistance <= item.maxDistance);
+  return entry ? entry.price : 0;
+};
 
 // Safe number parse with fallback
 const toNumber = (input, fallback) => {
@@ -215,6 +239,20 @@ const applyClear = () => {
 
 // Wiring
 document.addEventListener("DOMContentLoaded", () => {
+  // DOM完全ロード後にすべてのフィールドを再初期化
+  fields.distance = document.getElementById("distance");
+  fields.fuelPrice = document.getElementById("fuel-price");
+  fields.fuelEfficiency = document.getElementById("fuel-efficiency");
+  fields.fuelCost = document.getElementById("fuel-cost");
+  fields.tollDistance = document.getElementById("toll-distance");
+  fields.tollCost = document.getElementById("toll-cost");
+  fields.parkingCost = document.getElementById("parking-cost");
+  fields.otherCost = document.getElementById("other-cost");
+  fields.nonFuelCost = document.getElementById("non-fuel-cost");
+  fields.totalCost = document.getElementById("total-cost");
+  fields.peopleCount = document.getElementById("people-count");
+  fields.perPersonCost = document.getElementById("per-person-cost");
+
   // 計算関係のマッピング（出力 -> 入力）
   const dependencyMap = {
     fuelCost: ["distance", "fuelPrice", "fuelEfficiency"],
@@ -272,6 +310,19 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("input", updateTotals);
   });
 
+  // 高速距離の変更時に料金を自動計算
+  if (fields.tollDistance) {
+    fields.tollDistance.addEventListener("input", () => {
+      const tollDist = toNumber(fields.tollDistance, 0);
+      const price = calculateTollPrice(tollDist);
+      console.log(`高速距離: ${tollDist}km → 料金: ${price}円`);
+      setFieldValue("tollCost", price);
+      updateTotals();
+    });
+  } else {
+    console.error("tollDistance フィールドが見つかりません");
+  }
+
   document.querySelectorAll("[data-delta]").forEach((button) => {
     button.addEventListener("click", () => {
       const target = button.dataset.target;
@@ -301,6 +352,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupHighlight();
   updateTotals();
+
+  // ボタンスタックの列数を調整（DOM完全ロード後）
+  setTimeout(() => {
+    adjustCalcButtonStackColumns();
+  }, 0);
+
+  // プリセット保存ボタン
+  document
+    .querySelector('[data-action="save-preset"]')
+    ?.addEventListener("click", () => openModal({ mode: "create" }));
+
+  // モーダル閉じる
+  modalOverlay?.addEventListener("click", closeModal);
+  modalCancel?.addEventListener("click", closeModal);
+
+  // モーダル保存
+  modalSave?.addEventListener("click", saveNewPreset);
+
+  // Enter キーで保存
+  modalInput?.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      saveNewPreset();
+    }
+  });
+
+  // プリセットセクションの開閉
+  document.getElementById("presets-toggle")?.addEventListener("click", () => {
+    const content = document.getElementById("presets-content");
+    const icon = document.querySelector(".presets_toggle-icon");
+    content.classList.toggle("presets_content--open");
+    icon.textContent = content.classList.contains("presets_content--open")
+      ? "▲"
+      : "▼";
+  });
+
+  // 履歴セクションの開閉
+  document.getElementById("history-toggle")?.addEventListener("click", () => {
+    const content = document.getElementById("history-content");
+    const icon = document.querySelector(".history_toggle-icon");
+    content.classList.toggle("history_content--open");
+    icon.textContent = content.classList.contains("history_content--open")
+      ? "▲"
+      : "▼";
+  });
+
+  document.getElementById("history-clear")?.addEventListener("click", () => {
+    if (confirm("履歴をすべて削除しますか?")) {
+      saveHistory([]);
+      renderHistory();
+    }
+  });
+
+  // 初期表示
+  renderPresets();
+  renderHistory();
 });
 
 // ============================================
@@ -335,6 +441,7 @@ const getCurrentSettings = () => ({
   distance: fields.distance.value,
   fuelPrice: fields.fuelPrice.value,
   fuelEfficiency: fields.fuelEfficiency.value,
+  tollDistance: fields.tollDistance?.value || "0",
   tollCost: fields.tollCost.value,
   parkingCost: fields.parkingCost.value,
   otherCost: fields.otherCost.value,
@@ -600,7 +707,7 @@ const renderHistory = () => {
             <div class="history_meta">${formatDateTime(entry.createdAt)}</div>
             <div class="history_detail">
               合計:${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
-              <br>走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人
+              <br>走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速距離:${s.tollDistance}km(${s.tollCost}円) / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人
             </div>
           </div>
           <div class="history_actions">
@@ -829,61 +936,3 @@ const adjustCalcButtonStackColumns = () => {
     });
   });
 };
-
-// イベントリスナー
-document.addEventListener("DOMContentLoaded", () => {
-  // ボタンスタックの列数を調整（DOM完全ロード後）
-  setTimeout(() => {
-    adjustCalcButtonStackColumns();
-  }, 0);
-
-  // プリセット保存ボタン
-  document
-    .querySelector('[data-action="save-preset"]')
-    ?.addEventListener("click", () => openModal({ mode: "create" }));
-
-  // モーダル閉じる
-  modalOverlay?.addEventListener("click", closeModal);
-  modalCancel?.addEventListener("click", closeModal);
-
-  // モーダル保存
-  modalSave?.addEventListener("click", saveNewPreset);
-
-  // Enter キーで保存
-  modalInput?.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      saveNewPreset();
-    }
-  });
-
-  // プリセットセクションの開閉
-  document.getElementById("presets-toggle")?.addEventListener("click", () => {
-    const content = document.getElementById("presets-content");
-    const icon = document.querySelector(".presets_toggle-icon");
-    content.classList.toggle("presets_content--open");
-    icon.textContent = content.classList.contains("presets_content--open")
-      ? "▲"
-      : "▼";
-  });
-
-  // 履歴セクションの開閉
-  document.getElementById("history-toggle")?.addEventListener("click", () => {
-    const content = document.getElementById("history-content");
-    const icon = document.querySelector(".history_toggle-icon");
-    content.classList.toggle("history_content--open");
-    icon.textContent = content.classList.contains("history_content--open")
-      ? "▲"
-      : "▼";
-  });
-
-  document.getElementById("history-clear")?.addEventListener("click", () => {
-    if (confirm("履歴をすべて削除しますか?")) {
-      saveHistory([]);
-      renderHistory();
-    }
-  });
-
-  // 初期表示
-  renderPresets();
-  renderHistory();
-});

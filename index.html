@@ -299,6 +299,58 @@
             </tr>
             <tr class="calc_row">
               <th class="calc_label" scope="row">
+                <label for="toll-distance">高速距離(km)</label>
+              </th>
+              <td class="calc_cell">
+                <input
+                  id="toll-distance"
+                  name="tollDistance"
+                  class="calc_input"
+                  type="number"
+                  step="1"
+                  min="0"
+                  value="0"
+                />
+              </td>
+              <td class="calc_cell calc_cell--tight" colspan="2">
+                <div class="calc_button-stack">
+                  <button
+                    class="calc_button calc_button--mini"
+                    type="button"
+                    data-target="toll-distance"
+                    data-delta="100"
+                  >
+                    +100
+                  </button>
+                  <button
+                    class="calc_button calc_button--mini"
+                    type="button"
+                    data-target="toll-distance"
+                    data-delta="10"
+                  >
+                    +10
+                  </button>
+                  <button
+                    class="calc_button calc_button--mini"
+                    type="button"
+                    data-target="toll-distance"
+                    data-delta="-100"
+                  >
+                    -100
+                  </button>
+                  <button
+                    class="calc_button calc_button--mini"
+                    type="button"
+                    data-target="toll-distance"
+                    data-delta="-10"
+                  >
+                    -10
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr class="calc_row">
+              <th class="calc_label" scope="row">
                 <label for="toll-cost">高速代(円)</label>
               </th>
               <td class="calc_cell">

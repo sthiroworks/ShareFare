@@ -38,6 +38,13 @@
   --color-delete-1: #ef4444;
   --color-delete-2: #dc2626;
 
+  /* 内訳グラフ */
+  --color-chart-fuel: #38bdf8;
+  --color-chart-toll: #fbbf24;
+  --color-chart-parking: #34d399;
+  --color-chart-other: #f97316;
+  --color-chart-track: rgba(148, 163, 184, 0.25);
+
   /* シャドウ */
   --shadow-card: 0 30px 60px rgba(15, 23, 42, 0.45);
   --shadow-glow: 0 0 18px rgba(56, 189, 248, 0.4);

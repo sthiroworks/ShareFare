@@ -13,6 +13,22 @@ const fields = {
   perPersonCost: document.getElementById("per-person-cost")
 };
 
+// Breakdown chart bindings
+const breakdown = {
+  fuelFill: document.getElementById("breakdown-fuel-fill"),
+  fuelValue: document.getElementById("breakdown-fuel-value"),
+  fuelPercent: document.getElementById("breakdown-fuel-percent"),
+  tollFill: document.getElementById("breakdown-toll-fill"),
+  tollValue: document.getElementById("breakdown-toll-value"),
+  tollPercent: document.getElementById("breakdown-toll-percent"),
+  parkingFill: document.getElementById("breakdown-parking-fill"),
+  parkingValue: document.getElementById("breakdown-parking-value"),
+  parkingPercent: document.getElementById("breakdown-parking-percent"),
+  otherFill: document.getElementById("breakdown-other-fill"),
+  otherValue: document.getElementById("breakdown-other-value"),
+  otherPercent: document.getElementById("breakdown-other-percent")
+};
+
 // Default values for calculations
 const defaults = {
   distance: 100,
@@ -87,6 +103,45 @@ const normalizeByStep = (input, value) => {
   return Math.round(value);
 };
 
+const updateBreakdown = (items, total) => {
+  if (!breakdown.fuelFill) return;
+  const safeTotal = total > 0 ? total : 0;
+  const entries = [
+    {
+      value: items.fuel,
+      fill: breakdown.fuelFill,
+      label: breakdown.fuelValue,
+      percent: breakdown.fuelPercent
+    },
+    {
+      value: items.toll,
+      fill: breakdown.tollFill,
+      label: breakdown.tollValue,
+      percent: breakdown.tollPercent
+    },
+    {
+      value: items.parking,
+      fill: breakdown.parkingFill,
+      label: breakdown.parkingValue,
+      percent: breakdown.parkingPercent
+    },
+    {
+      value: items.other,
+      fill: breakdown.otherFill,
+      label: breakdown.otherValue,
+      percent: breakdown.otherPercent
+    }
+  ];
+
+  entries.forEach((entry) => {
+    const amount = Number(entry.value) || 0;
+    const ratio = safeTotal > 0 ? (amount / safeTotal) * 100 : 0;
+    entry.fill.style.width = `${ratio.toFixed(1)}%`;
+    entry.label.textContent = amount.toLocaleString();
+    entry.percent.textContent = `${Math.round(ratio)}%`;
+  });
+};
+
 // Main calculation pipeline
 const updateTotals = () => {
   const distance = toNumber(fields.distance, defaults.distance);
@@ -113,6 +168,15 @@ const updateTotals = () => {
   setFieldValue("nonFuelCost", nonFuelCost);
   setFieldValue("totalCost", totalCost);
   setFieldValue("perPersonCost", perPersonCost);
+  updateBreakdown(
+    {
+      fuel: fuelCost,
+      toll: tollCost,
+      parking: parkingCost,
+      other: otherCost
+    },
+    totalCost
+  );
 };
 
 // Step adjust buttons

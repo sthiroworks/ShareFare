@@ -310,6 +310,86 @@ body::before {
     0 6px 12px rgba(220, 38, 38, 0.3);
 }
 
+/* Breakdown chart */
+.breakdown {
+  max-width: 820px;
+  margin: 24px auto 0;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--color-card-border);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.4);
+}
+
+.breakdown_title {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.breakdown_rows {
+  display: grid;
+  gap: 12px;
+}
+
+.breakdown_row {
+  display: grid;
+  grid-template-columns: 110px 1fr 130px;
+  gap: 12px;
+  align-items: center;
+}
+
+.breakdown_label {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  letter-spacing: 0.04em;
+}
+
+.breakdown_bar {
+  height: 10px;
+  background: var(--color-chart-track);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.breakdown_fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.breakdown_fill--fuel {
+  background: var(--color-chart-fuel);
+}
+
+.breakdown_fill--toll {
+  background: var(--color-chart-toll);
+}
+
+.breakdown_fill--parking {
+  background: var(--color-chart-parking);
+}
+
+.breakdown_fill--other {
+  background: var(--color-chart-other);
+}
+
+.breakdown_value {
+  text-align: right;
+  font-size: 12px;
+  color: var(--color-text-sub);
+  white-space: nowrap;
+}
+
+.breakdown_percent {
+  margin-left: 6px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
 /* プリセットセクション */
 .presets {
   max-width: 820px;
@@ -633,6 +713,19 @@ body::before {
     box-shadow:
       0 0 12px rgba(56, 189, 248, 0.4),
       0 6px 10px rgba(37, 99, 235, 0.25);
+  }
+
+  .breakdown {
+    padding: 16px;
+  }
+
+  .breakdown_row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .breakdown_value {
+    text-align: left;
   }
 
   .preset-item {

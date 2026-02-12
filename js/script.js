@@ -296,12 +296,20 @@ const renderPresets = () => {
 
   container.innerHTML = presets
     .map(
-      (preset, index) => `
+      (preset, index) => {
+        const s = preset.settings;
+        const fuelCost = Math.round((s.distance / s.fuelEfficiency) * s.fuelPrice);
+        const total = fuelCost + parseInt(s.tollCost || 0) + parseInt(s.parkingCost || 0) + parseInt(s.otherCost || 0);
+        
+        return `
       <div class="preset-item">
         <div class="preset-item_info">
           <div class="preset-item_name">${escapeHtml(preset.name)}</div>
           <div class="preset-item_details">
-            ${preset.settings.distance}km / ${preset.settings.fuelEfficiency}km/L / ${preset.settings.peopleCount}人
+            ${s.distance}km / ガ:${s.fuelPrice}円 / ${s.fuelEfficiency}km/L / 高:${s.tollCost}円 / 駐:${s.parkingCost}円 / 他:${s.otherCost}円 / 合:${total.toLocaleString()}円
+          </div>
+          <div class="preset-item_date">
+            ${preset.createdAt ? formatDateTime(preset.createdAt) : ""}
           </div>
         </div>
         <div class="preset-item_actions">
@@ -321,7 +329,8 @@ const renderPresets = () => {
           </button>
         </div>
       </div>
-    `
+    `;
+      }
     )
     .join("");
 
@@ -359,6 +368,18 @@ const escapeHtml = (str) => {
   const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
+};
+
+// 日時をyyyy/mm/dd hh:mm:ss形式にフォーマット
+const formatDateTime = (isoString) => {
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 };
 
 // モーダル制御

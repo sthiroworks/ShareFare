@@ -529,8 +529,14 @@ const renderHistorySummary = (history) => {
     return;
   }
 
+  // 日次でグループ化
   const grouped = history.reduce((acc, entry) => {
-    const key = formatMonth(entry.createdAt);
+    const date = new Date(entry.createdAt);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const key = `${year}/${month}/${day}`;
+    
     if (!acc[key]) {
       acc[key] = { total: 0, count: 0 };
     }
@@ -545,16 +551,14 @@ const renderHistorySummary = (history) => {
   const maxTotal = Math.max(...summaryEntries.map(([, data]) => data.total));
 
   const summaryHtml = summaryEntries
-    .map(([month, data]) => {
+    .map(([date, data]) => {
       const ratio = maxTotal > 0 ? (data.total / maxTotal) * 100 : 0;
       return `
         <div class="history_summary-item">
-          <div class="history_summary-meta">
-            <span>${month}</span>
-            <span>${data.total.toLocaleString()}円 (${data.count}件)</span>
-          </div>
-          <div class="history_summary-bar">
-            <span class="history_summary-fill" style="width: ${ratio}%;"></span>
+          <div class="history_summary-meta" style="--bar-width: ${ratio}%;">
+            <span class="history_summary-month">${date}</span>
+            <span class="history_summary-amount">${data.total.toLocaleString()}円</span>
+            <span style="font-size: 11px; color: var(--color-text-sub); position: relative; z-index: 1;">(${data.count}件)</span>
           </div>
         </div>
       `;
@@ -577,14 +581,18 @@ const renderHistory = () => {
     return;
   }
 
+  // 最大額を計算
+  const maxTotal = Math.max(...history.map(e => Number(e.results?.totalCost || 0)));
+
   listEl.innerHTML = history
     .map((entry) => {
       const s = entry.inputs || {};
       const total = Number(entry.results?.totalCost || 0);
       const perPerson = Number(entry.results?.perPersonCost || 0);
       const people = Number(entry.inputs?.peopleCount || 1);
+      const ratio = maxTotal > 0 ? (total / maxTotal) * 100 : 0;
       return `
-        <div class="history_item">
+        <div class="history_item" style="--bar-width: ${ratio}%;">
           <div class="history_info">
             <div class="history_meta">${formatDateTime(entry.createdAt)}</div>
             <div class="history_detail">

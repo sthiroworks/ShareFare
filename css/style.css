@@ -412,8 +412,8 @@ body::before {
   font-size: 12px;
   color: var(--color-text-sub);
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.4;
+  word-break: break-all;
 }
 
 .preset-item_date {

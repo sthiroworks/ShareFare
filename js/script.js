@@ -295,18 +295,24 @@ const renderPresets = () => {
   }
 
   container.innerHTML = presets
-    .map(
-      (preset, index) => {
-        const s = preset.settings;
-        const fuelCost = Math.round((s.distance / s.fuelEfficiency) * s.fuelPrice);
-        const total = fuelCost + parseInt(s.tollCost || 0) + parseInt(s.parkingCost || 0) + parseInt(s.otherCost || 0);
-        
-        return `
+    .map((preset, index) => {
+      const s = preset.settings;
+      const fuelCost = Math.round(
+        (s.distance / s.fuelEfficiency) * s.fuelPrice
+      );
+      const total =
+        fuelCost +
+        parseInt(s.tollCost || 0) +
+        parseInt(s.parkingCost || 0) +
+        parseInt(s.otherCost || 0);
+      const perPerson = Math.round(total / parseInt(s.peopleCount || 1));
+
+      return `
       <div class="preset-item">
         <div class="preset-item_info">
           <div class="preset-item_name">${escapeHtml(preset.name)}</div>
           <div class="preset-item_details">
-            ${s.distance}km / ガ:${s.fuelPrice}円 / ${s.fuelEfficiency}km/L / 高:${s.tollCost}円 / 駐:${s.parkingCost}円 / 他:${s.otherCost}円 / 合:${total.toLocaleString()}円
+            走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人 / ${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
           </div>
           <div class="preset-item_date">
             ${preset.createdAt ? formatDateTime(preset.createdAt) : ""}
@@ -330,8 +336,7 @@ const renderPresets = () => {
         </div>
       </div>
     `;
-      }
-    )
+    })
     .join("");
 
   // イベント設定

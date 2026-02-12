@@ -66,6 +66,19 @@
     <main class="calc">
       <h1 class="calc_title">交通費精算</h1>
 
+      <!-- プリセット一覧 -->
+      <section class="presets" id="presets-section">
+        <button class="presets_toggle" id="presets-toggle" type="button">
+          <span class="presets_toggle-icon">▼</span>
+          お気に入り設定
+        </button>
+        <div class="presets_content" id="presets-content">
+          <div class="presets_list" id="presets-list">
+            <p class="presets_empty">プリセットが保存されていません</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Calculator -->
       <form class="calc_form" novalidate>
         <table class="calc_table">
@@ -597,19 +610,6 @@
         </div>
       </form>
     </main>
-
-    <!-- プリセット一覧 -->
-    <section class="presets" id="presets-section">
-      <button class="presets_toggle" id="presets-toggle" type="button">
-        <span class="presets_toggle-icon">▼</span>
-        お気に入り設定
-      </button>
-      <div class="presets_content" id="presets-content">
-        <div class="presets_list" id="presets-list">
-          <p class="presets_empty">プリセットが保存されていません</p>
-        </div>
-      </div>
-    </section>
 
     <!-- プリセット保存モーダル -->
     <div class="modal" id="preset-modal">

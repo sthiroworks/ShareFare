@@ -524,6 +524,35 @@ body::before {
   padding: 0 24px;
 }
 
+/* Toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(12px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--color-text);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--color-card-border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  z-index: 1100;
+  max-width: min(90vw, 420px);
+  text-align: center;
+}
+
+.toast--show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* Mobile tweaks */
 @media (max-width: 768px) {
   body {

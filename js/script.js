@@ -346,6 +346,8 @@ const renderPresets = () => {
       const preset = presets[index];
       if (preset) {
         applySettings(preset.settings);
+        const presetName = preset.name ? `「${preset.name}」` : "";
+        showToast(`プリセット${presetName}を読み込みました`);
       }
     });
   });
@@ -393,6 +395,20 @@ const modalInput = document.getElementById("preset-name");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalCancel = document.getElementById("modal-cancel");
 const modalSave = document.getElementById("modal-save");
+const toast = document.getElementById("toast");
+let toastTimer;
+
+const showToast = (message) => {
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add("toast--show");
+  if (toastTimer) {
+    clearTimeout(toastTimer);
+  }
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("toast--show");
+  }, 2200);
+};
 
 const openModal = () => {
   modal.classList.add("modal--open");

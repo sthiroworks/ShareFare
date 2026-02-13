@@ -239,10 +239,10 @@ const adjustField = (targetId, delta) => {
   const current = toNumber(input, 0);
   const next = clampMin(current + delta, min);
   input.value = String(normalizeByStep(input, next));
-  
+
   // inputイベントを手動で発火させる
   input.dispatchEvent(new Event("input", { bubbles: true }));
-  
+
   updateTotals();
 };
 
@@ -386,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 保存された状態を読み込み
     isRoundTrip = loadRoundTripMode();
     roundTripToggle.checked = isRoundTrip;
-    
+
     // トグル時の処理
     roundTripToggle.addEventListener("change", () => {
       isRoundTrip = roundTripToggle.checked;

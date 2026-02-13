@@ -103,6 +103,14 @@
 
       <!-- Calculator -->
       <form class="calc_form" novalidate>
+        <!-- 往復計算モードトグル -->
+        <div class="calc_options" style="margin-bottom: 16px; padding: 12px; background: var(--color-bg-sub); border-radius: 8px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="round-trip-toggle" style="cursor: pointer; width: 18px; height: 18px;">
+            <span style="font-weight: 500;">往復計算モード（距離と高速距離を2倍で計算）</span>
+          </label>
+        </div>
+        
         <table class="calc_table">
           <tbody>
             <tr class="calc_row">
@@ -296,58 +304,6 @@
                 />
               </td>
               <td class="calc_cell" colspan="2"></td>
-            </tr>
-            <tr class="calc_row">
-              <th class="calc_label" scope="row">
-                <label for="toll-distance">高速距離(km)</label>
-              </th>
-              <td class="calc_cell">
-                <input
-                  id="toll-distance"
-                  name="tollDistance"
-                  class="calc_input"
-                  type="number"
-                  step="1"
-                  min="0"
-                  value="0"
-                />
-              </td>
-              <td class="calc_cell calc_cell--tight" colspan="2">
-                <div class="calc_button-stack">
-                  <button
-                    class="calc_button calc_button--mini"
-                    type="button"
-                    data-target="toll-distance"
-                    data-delta="100"
-                  >
-                    +100
-                  </button>
-                  <button
-                    class="calc_button calc_button--mini"
-                    type="button"
-                    data-target="toll-distance"
-                    data-delta="10"
-                  >
-                    +10
-                  </button>
-                  <button
-                    class="calc_button calc_button--mini"
-                    type="button"
-                    data-target="toll-distance"
-                    data-delta="-100"
-                  >
-                    -100
-                  </button>
-                  <button
-                    class="calc_button calc_button--mini"
-                    type="button"
-                    data-target="toll-distance"
-                    data-delta="-10"
-                  >
-                    -10
-                  </button>
-                </div>
-              </td>
             </tr>
             <tr class="calc_row">
               <th class="calc_label" scope="row">

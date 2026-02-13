@@ -4,7 +4,6 @@ const fields = {
   fuelPrice: document.getElementById("fuel-price"),
   fuelEfficiency: document.getElementById("fuel-efficiency"),
   fuelCost: document.getElementById("fuel-cost"),
-  tollDistance: document.getElementById("toll-distance"),
   tollCost: document.getElementById("toll-cost"),
   parkingCost: document.getElementById("parking-cost"),
   otherCost: document.getElementById("other-cost"),
@@ -54,9 +53,8 @@ const minValues = {
 // Values used by the clear action
 const clearValues = {
   distance: "0",
-  fuelEfficiency: "1.0",
+  fuelEfficiency: "10",
   fuelPrice: "0",
-  tollDistance: "0",
   tollCost: "0",
   parkingCost: "0",
   otherCost: "0",
@@ -65,6 +63,29 @@ const clearValues = {
 
 // Read-only outputs
 const outputFields = ["fuelCost", "nonFuelCost", "totalCost", "perPersonCost"];
+
+// 往復計算モードの状態管理
+const ROUND_TRIP_KEY = "sharefare_roundtrip";
+let isRoundTrip = false;
+
+// 往復モードの読み込み
+const loadRoundTripMode = () => {
+  try {
+    const saved = localStorage.getItem(ROUND_TRIP_KEY);
+    return saved === "true";
+  } catch (e) {
+    return false;
+  }
+};
+
+// 往復モードの保存
+const saveRoundTripMode = (enabled) => {
+  try {
+    localStorage.setItem(ROUND_TRIP_KEY, String(enabled));
+  } catch (e) {
+    console.error("Failed to save round-trip mode:", e);
+  }
+};
 
 // IC料金データベース（外部JSONから動的に読み込み）
 // 高速料金計算データベース（距離ベース）
@@ -168,13 +189,19 @@ const updateBreakdown = (items, total) => {
 
 // Main calculation pipeline
 const updateTotals = () => {
-  const distance = toNumber(fields.distance, defaults.distance);
+  let distance = toNumber(fields.distance, defaults.distance);
   const fuelPrice = toNumber(fields.fuelPrice, defaults.fuelPrice);
   let fuelEfficiency = toNumber(fields.fuelEfficiency, defaults.fuelEfficiency);
-  const tollCost = toNumber(fields.tollCost, defaults.tollCost);
+  let tollCost = toNumber(fields.tollCost, defaults.tollCost);
   const parkingCost = toNumber(fields.parkingCost, defaults.parkingCost);
   const otherCost = toNumber(fields.otherCost, defaults.otherCost);
   let peopleCount = toNumber(fields.peopleCount, defaults.peopleCount);
+
+  // 往復モードの場合は距離と高速代を2倍にする
+  if (isRoundTrip) {
+    distance = distance * 2;
+    tollCost = tollCost * 2;
+  }
 
   fuelEfficiency = normalizeMin(
     "fuelEfficiency",
@@ -212,6 +239,10 @@ const adjustField = (targetId, delta) => {
   const current = toNumber(input, 0);
   const next = clampMin(current + delta, min);
   input.value = String(normalizeByStep(input, next));
+  
+  // inputイベントを手動で発火させる
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+  
   updateTotals();
 };
 
@@ -244,7 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
   fields.fuelPrice = document.getElementById("fuel-price");
   fields.fuelEfficiency = document.getElementById("fuel-efficiency");
   fields.fuelCost = document.getElementById("fuel-cost");
-  fields.tollDistance = document.getElementById("toll-distance");
   fields.tollCost = document.getElementById("toll-cost");
   fields.parkingCost = document.getElementById("parking-cost");
   fields.otherCost = document.getElementById("other-cost");
@@ -310,19 +340,6 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("input", updateTotals);
   });
 
-  // 高速距離の変更時に料金を自動計算
-  if (fields.tollDistance) {
-    fields.tollDistance.addEventListener("input", () => {
-      const tollDist = toNumber(fields.tollDistance, 0);
-      const price = calculateTollPrice(tollDist);
-      console.log(`高速距離: ${tollDist}km → 料金: ${price}円`);
-      setFieldValue("tollCost", price);
-      updateTotals();
-    });
-  } else {
-    console.error("tollDistance フィールドが見つかりません");
-  }
-
   document.querySelectorAll("[data-delta]").forEach((button) => {
     button.addEventListener("click", () => {
       const target = button.dataset.target;
@@ -362,6 +379,21 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector('[data-action="save-preset"]')
     ?.addEventListener("click", () => openModal({ mode: "create" }));
+
+  // 往復計算モードのトグル
+  const roundTripToggle = document.getElementById("round-trip-toggle");
+  if (roundTripToggle) {
+    // 保存された状態を読み込み
+    isRoundTrip = loadRoundTripMode();
+    roundTripToggle.checked = isRoundTrip;
+    
+    // トグル時の処理
+    roundTripToggle.addEventListener("change", () => {
+      isRoundTrip = roundTripToggle.checked;
+      saveRoundTripMode(isRoundTrip);
+      updateTotals();
+    });
+  }
 
   // モーダル閉じる
   modalOverlay?.addEventListener("click", closeModal);
@@ -441,7 +473,6 @@ const getCurrentSettings = () => ({
   distance: fields.distance.value,
   fuelPrice: fields.fuelPrice.value,
   fuelEfficiency: fields.fuelEfficiency.value,
-  tollDistance: fields.tollDistance?.value || "0",
   tollCost: fields.tollCost.value,
   parkingCost: fields.parkingCost.value,
   otherCost: fields.otherCost.value,
@@ -707,7 +738,7 @@ const renderHistory = () => {
             <div class="history_meta">${formatDateTime(entry.createdAt)}</div>
             <div class="history_detail">
               合計:${total.toLocaleString()}円(${perPerson.toLocaleString()}円/人)
-              <br>走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速距離:${s.tollDistance}km(${s.tollCost}円) / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人
+              <br>走行距離:${s.distance}km / ガ代:${s.fuelPrice}円 / 燃:${s.fuelEfficiency}km/L / 高速代:${s.tollCost}円 / 駐車代:${s.parkingCost}円 / 他:${s.otherCost}円 / ${s.peopleCount}人
             </div>
           </div>
           <div class="history_actions">
